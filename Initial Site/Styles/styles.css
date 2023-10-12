@@ -1,0 +1,33 @@
+body{
+    background-color: rgb(43, 43, 43);
+}
+h1{
+    color: white;
+    text-align: center;
+}
+p{
+    text-align: center;
+    color: rgba(210, 210, 210);
+    font-size: 22px;
+}
+img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 35%;
+}
+
+.myDiv{
+    display: flex;
+    margin: auto;
+    width: 70%;
+
+}
+.myDiv p{
+    margin-left: 15px;
+}
+
+#china{
+    width: 65%;
+}
+
