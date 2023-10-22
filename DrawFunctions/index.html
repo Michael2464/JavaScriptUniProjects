@@ -18,10 +18,11 @@
       
       <label for="funcInput">Write your function:</label>
       <div>
-        <input type="text" id="funcInput" name="funcInput">
+        <textarea id="funcInput" name="funcInput" rows="16" cols="40"></textarea>
+      </div>
+      <div>
         <button @click="drawFunction" class="myButton">Draw</button>
       </div>
-
       <canvas ref="canvas"id="canvas" width="500" height="400">
 
       </canvas>

@@ -9,7 +9,7 @@ body {
   text-align: center;
 }
 
-input{
+textarea{
   background-color: rgb(70, 70, 70);
   border-color: rgb(70, 70, 70);
   border-radius: 8px;
@@ -26,7 +26,7 @@ input{
 }
 
 .myButton{
-  margin-left: 10px;
+  margin-top: 10px;
   width: 100px;
   height: 30px;
   border-radius: 20px;
