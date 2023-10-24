@@ -17,8 +17,10 @@
       <p v-show="false">Hahahaha it is optional</p>
       
       <label for="funcInput">Write your function:</label>
-      <div>
-        <textarea id="funcInput" name="funcInput" rows="16" cols="40"></textarea>
+      <div class="textareaDiv">
+        <div v-for="(func, index) in funcAmount">
+          <textarea v-bind:id="`funcInput${index}`" name="funcInput" rows="16" cols="40"></textarea>
+        </div>
       </div>
       <div>
         <button @click="drawFunction" class="myButton">Draw</button>
