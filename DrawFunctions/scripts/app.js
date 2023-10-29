@@ -1,67 +1,46 @@
-// separate business code from framework
-// HW: Draw arroys to the axis + 
-//     Add numbers to divisions + 
-//     *Add multiple graphics +
-//     Function толщина линии (custom) +
+// HW: Function толщина линии (custom) +
 //     tan(x) draws vertical assimptodes, don't to it. Instead
 //     draw it with separated lines - - - - - (canvas can do it itself)
-//     
-//     ctx.setLineDash([5, 15]);
+//     SEPARATE BUSINESS CODE FROM FRAMEWORK
+//     Make it beautiful
+//     Add canvas to the whole page and resize it depending on the proportion
+//     Before that release all the data from canvas
 
 const app = Vue.createApp({
   // data, functions
   data() {
     return {
-      xDistance: 2,
-      yDistance: 2,
-      x0: 0,  // doesn't work properly
-      y0: 0, // doesn't work properly
-      funcAmount: 1, 
-      color: 'blue',
-      lineWidth: 3,
-      canvasWidth: 850,
-      canvasHeight: 650,
-      xMax: 20,
-      xMin: -20
+      xDistance: graph.xDistance,
+      yDistance: graph.yDistance,
+      x0: graph.x0,  // doesn't work properly
+      y0: graph.y0, // doesn't work properly
+      width: getClientWindowWidth(),
+      height: getClientWindowHeight(),
+      funcAmount: graph.funcAmount, 
+      color: graph.color,
+      lineWidth: graph.lineWidth,
+      canvasWidth: graph.width,
+      canvasHeight: graph.height,
+      xMax: graph.xMax,
+      xMin: graph.xMin,
+      yMax: graph.yMax,
+      yMin: graph.yMin
     };
+  },
+  mounted() {
+    window.addEventListener('resize', this.getDimensions)
+    this.setupCanvas()
+  },
+  unmounted() {
+    window.removeEventListener('resize', this.getDimensions)
   },
   methods:{
     drawFunction(){
-      let F = []
-      for(let i = 0; i < this.funcAmount; i++){
-        let f = function (x) {
-          return eval(document.getElementById("funcInput"+i.toString()).value)
-        }
-        F.push(f)
-      }
-      this.setupCanvas()
-      this.renderFunction(F)
+      drawFunction(graph.funcAmount)
     },
 
     renderFunction(F){
-      let canvas = document.getElementById("canvas")
-      let ctx = canvas.getContext("2d")
-      let step = (this.xMax - this.xMin) / this.canvasWidth
-
-      ctx.font = "6px serif"
-      ctx.lineWidth = this.lineWidth || 2;
-
-      for (let i = 0; i < F.length; i++){
-        ctx.beginPath()
-        ctx.strokeStyle = this.color || 'red'
-        ctx.moveTo(this.xCoord(this.xMin), this.yCoord(F[i](this.xMin)))
-        for(let x = this.xMin + step; x <= this.xMax; x += step)
-        {
-          const y = F[i](x)
-
-          //const yMax = this.xMax * this.canvasHeight / this.canvasWidth
-          //if(Math.abs(y) > yMax+10) 
-          //  ctx.setLineDash([0.5, 1])
-
-          ctx.lineTo(this.xCoord(x+this.x0), this.yCoord(y+this.y0))
-        }
-        ctx.stroke()
-      }
+      renderFunction(F, {})
     },
 
     xCoord(x){
@@ -78,6 +57,8 @@ const app = Vue.createApp({
     setupCanvas() {
       let canvas = document.getElementById("canvas")
       canvas.style.background = "#ff8"
+    
+      const diff = this.wHeight / this.wWidth
       canvas.width = this.canvasWidth
       canvas.height = this.canvasHeight
       
@@ -175,10 +156,15 @@ const app = Vue.createApp({
         ctx.lineTo(this.xCoord(this.xMax), this.yCoord(i))
       }
       ctx.stroke()
+    },
+    getDimensions() {
+      this.width = getClientWindowWidth()
+      this.height = getClientWindowHeight()
     }
   },
   mounted(){
-    this.setupCanvas()
+    var graph = new Graph()
+    setupCanvas();
   }
 })
 app.mount('#app')
