@@ -4,25 +4,91 @@ body {
   background-color: rgb(20,20,20);
   color: rgb(200, 200, 200);
   font-family: 'Noto Sans', sans-serif;
-  margin: 15px;
+  margin: 0;
 
   text-align: center;
 }
 
-textarea{
+h1{
+  font-size: 40px;
+}
+
+#label{
+  font-size: 20px;
+}
+
+.options{
+  position: absolute;
+  top:20px;
+  left:20px;
+}
+
+.checkbutton{
+  cursor: pointer;
+}
+#check{
+  display: none;
+}
+
+.menu-wrap{
+  position: absolute;
+  top: 100%;
+  left: 10%;
+  width: 420px;
+
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height 0.1s;
+}
+.menu-wrap.open-menu{
+  max-height: 400px;
+}
+
+.menu{
+  border-radius: 20px;
+  background: rgb(30,30,30);
+  padding: 10px;
+  margin: 5px;
+}
+.menu hr{
+  border: 0;
+  height: 1px;
+  width: 100%;
+  background: rgb(100, 100, 100);
+  margin: 0px 0 10px;
+}
+.menu-buttons{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.menu-buttons h1{
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.textareaDivElem{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.textareaDivElem textarea{
   background-color: rgb(70, 70, 70);
   border-color: rgb(70, 70, 70);
   border-radius: 8px;
   border-style: none;
   width: auto;
   height: 30px;
+  
+  margin: 5px;
 
   color: rgb(230, 230, 230);
   font-size: large;
 }
 
 #canvas{
-  margin-top: 20px;
+  margin: 0;
 }
 
 .myButton{

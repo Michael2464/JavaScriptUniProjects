@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <title>Draw Functions</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="styles/styles.css">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+
+  
+  <div id="app">
+    <span class="options">
+      <input @click="toggleMenu" type="checkbox" id="check">
+      <label for="check" class="checkbutton">
+        <img src="resources/icons/options.png">
+      </label>
+  
+      <div class="menu-wrap" id="menuWrap">
+        <div class="menu">
+          
+          <div class="menu-buttons">
+            <h1>Function Renderer</h1>
+            <button @click="onAddFuncButtonClick">Add</button>
+          </div>
+          
+          <hr>
+  
+          <div class="textareaDiv">
+            <div v-for="(func, index) in graph.functions.length" class="textareaDivElem">
+              <textarea v-bind:id="`funcInput${index}`" name="funcInput" rows="16" cols="40" @keyup="keyUpHandle({index})"></textarea>
+              <button @click="onRemoveFuncButtonClick({index})">-</button>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </span>
+
+    <canvas ref="canvas" id="canvas" width="500" height="400">
+
+    </canvas>
+  </div>
+
+  <script src="scripts/Graph.js"></script>
+  <script src="scripts/app.js"></script>
+</body>
+
+</html>
