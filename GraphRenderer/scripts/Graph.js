@@ -14,12 +14,13 @@ class Graph {
   yMin = this.xMin * this.height / this.width
   zoomStep = 1.5
   dotSize = 4
-  functions = []
+  canMove = true
+  functions = ["x*x", "x+5"]
 
   drawFunction() {
-    let F = []
+    const F = []
     for (let i = 0; i < this.functions.length; i++) {
-      let f = function (x) {
+      const f = function (x) {
         return eval(this.functions[i])
       }
       F.push(f)
@@ -37,8 +38,35 @@ class Graph {
     return (x - data.xMin) / (data.xMax - data.xMin) * data.width
   }
 
+  /*
+  function xs(x) {
+        return (((x - win.left) * canvas.width) / win.width);
+    }
+
+    function ys(y) {
+        return (((-y - win.bottom) * canvas.height) / win.height);
+    }
+  */
+
   // Data: yMin, yMax, cHeight
   yCoord(y, data) {
+    data = data || {}
+    data.yMin = data.yMin || this.yMin;
+    data.yMax = data.yMax || this.yMax;
+    data.height = data.height || this.height;
+    return data.height - (y - data.yMin) / (data.yMax - data.yMin) * data.height
+  }
+
+  xScreen(x, data) {
+    data = data || {}
+    data.xMin = data.xMin || this.xMin;
+    data.xMax = data.xMax || this.xMax;
+    data.width = data.width || this.width;
+    return (x - data.xMin) / (data.xMax - data.xMin) * data.width
+  }
+
+  // Data: yMin, yMax, cHeight
+  yScreen(y, data) {
     data = data || {}
     data.yMin = data.yMin || this.yMin;
     data.yMax = data.yMax || this.yMax;
@@ -59,26 +87,27 @@ class Graph {
     data.lineWidth = data.lineWidth || this.lineWidth
     data.color = data.color || this.color
 
-    let canvas = document.getElementById("canvas")
-    let ctx = canvas.getContext("2d")
-    let step = (data.xMax - data.xMin) / data.width
+    const canvas = document.getElementById("canvas")
+    const ctx = canvas.getContext("2d")
+    const step = (data.xMax - data.xMin) / data.width
 
     ctx.font = "6px serif"
     ctx.lineWidth = data.lineWidth || 2;
 
     ctx.beginPath()
-    for (let i = 0; i < F.length; i++) {
+    for (let i = 0; i < F.length; i++) 
+    {
       ctx.strokeStyle = data.color || 'red'
       ctx.moveTo(this.xCoord(data.xMin), this.yCoord(F[i](data.xMin)))
-      for (let x = data.xMin + step; x <= data.xMax; x += step) {
+      for (let x = data.xMin + step; x <= data.xMax; x += step) 
+      {
         const y = F[i](x)
-
-        //if (y > -2 * step && y < 2 * step) {
-        //  this.drawPoint(ctx, x, y)
-        //}
 
         ctx.lineTo(this.xCoord(x + this.x0), this.yCoord(y + this.y0))
       }
+      const x = this.getZero(F[i], this.xCoord(data.xMin), this.xCoord(data.xMax));
+      this.drawPoint(ctx, x, F[i](x))
+      
       ctx.stroke()
     }
   }
@@ -106,13 +135,13 @@ class Graph {
     data.yMin = data.yMin || this.yMin
     data.yMax = data.yMax || this.yMax
 
-    let canvas = document.getElementById("canvas")
+    const canvas = document.getElementById("canvas")
     canvas.style.background = "#ff8"
 
     canvas.width = data.width
     canvas.height = data.height
 
-    let ctx = canvas.getContext("2d")
+    const ctx = canvas.getContext("2d")
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
     //ctx.save()
@@ -209,10 +238,32 @@ class Graph {
     ctx.arc(this.xCoord(x + this.x0), this.yCoord(y + this.y0), this.dotSize, 0, 2*Math.PI);
   }
 
+  onRemoveFuncButtonClick(index){
+    this.functions.splice(index, 1)
+    console.log(this.functions.length);
+  }
+
+  onAddFuncButtonClick(){
+    this.functions.push("")
+    console.log(this.functions.length);
+  }
+
   toggleMenu(){
-    let subMenu = document.getElementById("menuWrap")
+    const subMenu = document.getElementById("menuWrap")
     subMenu.classList.toggle("open-menu")
     console.log("toggleMenu")
+  }
+
+  getZero(f, a, b, eps=0.001){
+    if(f(a) * f(b) > 0)
+      return null
+    if(Math.abs(f(a)-f(b)) <= eps)
+      return (a+b)/2
+    const half = (a+b)/2;
+    if(f(a) * f(half) <= eps)
+      return this.getZero(f, a, half, eps)
+    if(f(half) * f(b) <= eps)
+      return this.getZero(f, half, b, eps)
   }
 
   getDimensionsHandle() {
@@ -220,15 +271,6 @@ class Graph {
     this.height = document.documentElement.clientHeight*0.7
     this.setupCanvas()
     this.drawFunction()
-  }
-
-  onRemoveFuncButtonClick(index){
-    this.functions.splice(index, 1)
-  }
-
-  onAddFuncButtonClick(){
-    this.functions.push("")
-    console.log(this.functions);
   }
 
   wheelEventHandle(event){
