@@ -18,7 +18,7 @@ class UI {
 
     toggleMenu(){
       this.graph.toggleMenu();
-    },
+    }
 
     onRemoveFuncButtonClick(index){
       this.functions.splice(index, 1)

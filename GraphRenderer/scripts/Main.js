@@ -1,89 +1,103 @@
 class Main {
 
-    constructor() {
-        this.functions = []
+  constructor() {
+    this.functions = []
 
-        this.WIN = {
-            LEFT: -10,
-            BOTTOM: -10,
-            WIDTH: 20,
-            HEIGHT: 20,
-        }
-
-        this.graph = new Graph({ 
-            id: 'canvas', 
-            WIN: this.WIN, 
-            width: 500, 
-            height: 500, 
-            callbacks: {
-                wheel: () => this.wheel()
-            } 
-        })
-
-        new UI(this.graph, {
-            addFunction: (f, num) => this.addFunction(f, num)
-        })
+    this.WIN = {
+      LEFT: -10,
+      BOTTOM: -10,
+      WIDTH: 20,
+      HEIGHT: 20,
     }
 
-    wheel() {
-    }
+    this.zoomStep = 1.5
 
-    addFunction(f, num) {
-        this.funcs[num] = {
-            f,
-            color: '#f00',
-            width: 2
-        };
-        render();
-    }
-
-    renderFunction() {
-      data = data || {}
-
-    data.xMax = data.xMax || this.xMax
-    data.xMin = data.xMin || this.xMin
-    data.x0 = data.x0 || this.x0
-    data.y0 = data.y0 || this.y0
-    data.width = data.width || this.width
-    data.height = data.height || this.height
-    data.lineWidth = data.lineWidth || this.lineWidth
-    data.color = data.color || this.color
-
-    const canvas = document.getElementById("canvas")
-    const ctx = canvas.getContext("2d")
-    const step = (data.xMax - data.xMin) / data.width
-
-    ctx.font = "6px serif"
-    ctx.lineWidth = data.lineWidth || 2;
-
-    ctx.beginPath()
-    for (let i = 0; i < F.length; i++) 
-    {
-      ctx.strokeStyle = data.color || 'red'
-      ctx.moveTo(this.xCoord(data.xMin), this.yCoord(F[i](data.xMin)))
-      for (let x = data.xMin + step; x <= data.xMax; x += step) 
-      {
-        const y = F[i](x)
-
-        ctx.lineTo(this.xCoord(x + this.x0), this.yCoord(y + this.y0))
+    this.graph = new Graph({
+      id: 'canvas',
+      WIN: this.WIN,
+      width: 500,
+      height: 500,
+      callbacks: {
+        wheel: () => this.wheel()
       }
-      const x = this.getZero(F[i], this.xCoord(data.xMin), this.xCoord(data.xMax));
-      this.drawPoint(ctx, x, F[i](x))
-      
-      ctx.stroke()
-    }
-    }
+    })
 
-    getZero(f, a, b, eps=0.001){
-      if(f(a) * f(b) > 0)
-        return null
-      if(Math.abs(f(a)-f(b)) <= eps)
-        return (a+b)/2
-      const half = (a+b)/2;
-      if(f(a) * f(half) <= eps)
-        return this.getZero(f, a, half, eps)
-      if(f(half) * f(b) <= eps)
-        return this.getZero(f, half, b, eps)
+    new UI(this.graph, {
+      addFunction: (f, num) => this.addFunction(f, num),
+      delFunction: (index) => this.delFunction(index)
+    })
+  }
+
+  wheel(event) {
+    const delta = (event.wheelDelta > 0) ? -this.zoomStep : this.zoomStep
+    this.WIN.width += delta
+    this.WIN.height += delta
+    this.WIN.left -= delta * 0.5
+    this.WIN.bottom -= delta * 0.5
+    this.render() // update canvas view
+  }
+
+  addFunction(f, num) {
+    this.functions[num] = {
+      f,
+      color: '#f00',
+      width: 2
+    };
+    render();
+  }
+
+  delFunction(index) {
+    this.functions.splice(index, 1)
+    render()
+  }
+
+  // Renders everything
+  render(){
+    this.graph.clear()
+    this.drawAxis();
+    this.functions.forEach(func => func && this.drawFunction(func.f, func.color, func.width))
+  }
+
+  drayAxis() {
+    // X axis
+    this.graph.drawLine(this.WIN.LEFT, 0, this.WIN.LEFT + this.WIN.width, 0, 'black')
+    // Y axis 
+    this.graph.drawLine(this.WIN.BOTTOM, 0, this.WIN.BOTTOM + this.WIN.height, 0, 'black')
+
+    // Subdivisions
+    for (var i = Math.ceil(WIN.left); i < WIN.left + WIN.width; i++) 
+      graph.line(i, WIN.bottom, i, WIN.bottom + WIN.height, '#0003')
+    for (var i = Math.floor(WIN.left); i > WIN.left; i--) 
+      graph.line(i, WIN.bottom, i, WIN.bottom + WIN.height, '#0003')
+    for (var i = Math.ceil(WIN.bottom); i < WIN.bottom + WIN.height; i++)
+      graph.line(WIN.left, i, WIN.left + WIN.width, i, '#0003')
+    for (var i = Math.floor(WIN.bottom); i > WIN.bottom; i--)
+      graph.line(WIN.left, i, WIN.left + WIN.width, i, '#0003')
+
+  }
+
+  drawFunction(f, color, width, n = 200) {
+    let x = this.WIN.LEFT
+    const dx = this.WIN.WIDTH / n
+
+    while(x <= this.WIN.width + this.WIN.LEFT){
+      const isDashed = Math.abs(f(x + dx) - f(x)) >= this.WIN.height
+      this.graph.drawLine(x, f(x), x+dx, f(x+dx), color, width, isDashed)
+      x+=dx
+    }
+    // Draw function name as text here
+  }
+
+  getZero(f, a, b, eps = 0.001) {
+    if (f(a) * f(b) > 0)
+      return null
+    if (Math.abs(f(a) - f(b)) <= eps)
+      return (a + b) / 2
+    const half = (a + b) / 2;
+    if (f(a) * f(half) <= eps)
+      return this.getZero(f, a, half, eps)
+    if (f(half) * f(b) <= eps)
+      return this.getZero(f, half, b, eps)
   }
 
 }

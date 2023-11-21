@@ -10,55 +10,69 @@
 
 class Graph {
 
-  xDistance = 2
-  yDistance = 2
-  x0 = 0  // doesn't work properly
-  y0 = 0  // doesn't work properly
-  color = "blue"
-  lineWidth = 3
-  width = window.innerWidth
-  height = window.innerHeight
-  xMax = 20
-  xMin = -20
-  yMax = this.xMax * this.height / this.width
-  yMin = this.xMin * this.height / this.width
-  zoomStep = 1.5
-  dotSize = 4
-  canMove = true
+  constructor(options) {
+    options = options || {}
 
-  id: 'canvas', 
-  WIN: this.WIN, 
-  width: 500, 
-  height: 500, 
+    this.id = options.id || 'canvas'
+    this.width = options.width || 500
+    this.height = options.height || 500
+    this.WIN = options.WIN || {}
+    this.canvas
 
-  drawFunction() {
-    const F = [];
-    for (let i = 0; i < this.functions.length; i++) {
-      const f = function (x) {
-        return eval(this.functions[i])
-      }
-      F.push(f)
+    if (this.id)
+      canvas = document.getElementById(this.id)
+    else {
+      canvas = document.createElement('canvas')
+      document.querySelector('body').appendChild(canvas)
     }
-    this.setupCanvas()
-    this.renderFunction(F)
+
+    this.canvas.width = this.width
+    this.canvas.height = this.height
+    this.ctx = this.canvas.getContext('2d')
+    this.callbacks = options.callbacks;
+    this.canvas.addEventListener('wheel', callbacks.wheel)
   }
 
-  // Data: xMin, xMax, width
-  xCoord(x, data) {
-    data = data || {}
-    data.xMin = data.xMin || this.xMin;
-    data.xMax = data.xMax || this.xMax;
-    data.width = data.width || this.width;
-    return (x - data.xMin) / (data.xMax - data.xMin) * data.width
+  xs(x) {
+    return (x - this.WIN.left) / this.WIN.width * this.canvas.width;
   }
 
-  // Data: yMin, yMax, cHeight
-  yCoord(y, data) {
-    data = data || {}
-    data.yMin = data.yMin || this.yMin;
-    data.yMax = data.yMax || this.yMax;
-    data.height = data.height || this.height;
-    return data.height - (y - data.yMin) / (data.yMax - data.yMin) * data.height
+  ys(y) {
+    return this.canvas.height - (y - this.WIN.bottom) / this.WIN.height * this.canvas.height;
+  }
+
+  clear() {
+    this.ctx.fillStyle = '#ffe'
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
+  }
+
+  drawLine(x1, y1, x2, y2, color, width, isDash) {
+    this.ctx.beginPath()
+    this.ctx.strokeStyle = isDash ? color + '3' : color
+    this.ctx.lineWidth = width || 1
+    if (isDash) {
+      this.ctx.setLineDash([12, 10])
+    } else {
+      this.ctx.setLineDash([])
+    }
+    this.ctx.moveTo(xs(x1), ys(y1))
+    this.ctx.lineTo(xs(x2), ys(y2))
+    this.ctx.stroke()
+    this.ctx.closePath()
+  }
+
+  drawPoint(x, y, color, radius) {
+    context.beginPath();
+    context.strokeStyle = color || '#f00';
+    context.arc(xs(x), ys(y), radius || 2, 0, Math.PI * 2, false);
+    context.stroke();
+    context.closePath();
+  }
+
+  drawText(text, x, y, color){
+    this.ctx.fillStyle = color || '#000'
+    this.ctx.font = '20px Arial'
+    this.ctx.fillText(text, xs(x), ys(y))
   }
 
   xScreen(x, data) {
@@ -78,48 +92,10 @@ class Graph {
     return data.height - (y - data.yMin) / (data.yMax - data.yMin) * data.height
   }
 
-  // Data: xMax, xMin, x0, y0, cWidth, cHeight, lineWidth, color
-  renderFunction(F, data) {
-    data = data || {}
-
-    data.xMax = data.xMax || this.xMax
-    data.xMin = data.xMin || this.xMin
-    data.x0 = data.x0 || this.x0
-    data.y0 = data.y0 || this.y0
-    data.width = data.width || this.width
-    data.height = data.height || this.height
-    data.lineWidth = data.lineWidth || this.lineWidth
-    data.color = data.color || this.color
-
-    const canvas = document.getElementById("canvas")
-    const ctx = canvas.getContext("2d")
-    const step = (data.xMax - data.xMin) / data.width
-
-    ctx.font = "6px serif"
-    ctx.lineWidth = data.lineWidth || 2;
-
-    ctx.beginPath()
-    for (let i = 0; i < F.length; i++) 
-    {
-      ctx.strokeStyle = data.color || 'red'
-      ctx.moveTo(this.xCoord(data.xMin), this.yCoord(F[i](data.xMin)))
-      for (let x = data.xMin + step; x <= data.xMax; x += step) 
-      {
-        const y = F[i](x)
-
-        ctx.lineTo(this.xCoord(x + this.x0), this.yCoord(y + this.y0))
-      }
-      const x = this.getZero(F[i], this.xCoord(data.xMin), this.xCoord(data.xMax));
-      this.drawPoint(ctx, x, F[i](x))
-      
-      ctx.stroke()
-    }
-  }
-
   // Data: xDistance, yDistance, wHeight, wWidth, cWidth, cHeigth, 
   //       xMin, xMax, yMin, yMax, x0, y0
   setupCanvas(data) {
-    console.log(typeof(this.functions[0]))
+    console.log(typeof (this.functions[0]))
     data = data || {}
 
     data.xDistance = data.xDistance || this.xDistance
@@ -239,21 +215,17 @@ class Graph {
     ctx.stroke()
   }
 
-  drawPoint(ctx, x, y){
-    ctx.arc(this.xCoord(x + this.x0), this.yCoord(y + this.y0), this.dotSize, 0, 2*Math.PI);
-  }
-
-  onRemoveFuncButtonClick(index){
+  onRemoveFuncButtonClick(index) {
     this.functions.splice(index, 1)
     console.log(this.functions.length);
   }
 
-  onAddFuncButtonClick(){
+  onAddFuncButtonClick() {
     this.functions.push("")
     console.log(this.functions.length);
   }
 
-  toggleMenu(){
+  toggleMenu() {
     const subMenu = document.getElementById("menuWrap")
     subMenu.classList.toggle("open-menu")
     console.log("toggleMenu")
@@ -266,7 +238,7 @@ class Graph {
     this.drawFunction()
   }
 
-  wheelEventHandle(event){
+  wheelEventHandle(event) {
     const delta = event.wheelDelta > 0 ? -this.zoomStep : this.zoomStep
     this.xMax += delta
     this.xMin -= delta

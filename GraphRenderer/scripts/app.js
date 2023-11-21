@@ -33,41 +33,41 @@ const app = Vue.createApp({
 
   methods: {
     drawFunction() {
-      this.graph.drawFunction()
+      //this.graph.drawFunction()
     },
 
     renderFunction(F) {
-      this.graph.renderFunction(F)
+      //this.graph.renderFunction(F)
     },
 
     xCoord(x) {
-      return this.graph.xCoord(x)
+      //return this.graph.xCoord(x)
     },
 
     yCoord(y) {
-      return this.graph.yCoord(y)
+      //return this.graph.yCoord(y)
     },
 
     setupCanvas() {
-      this.graph.setupCanvas()
+      //this.graph.setupCanvas()
     },
     drawPoint(ctx, x, y){
-      this.graph.drawPoint(ctx, x, y)
+      //this.graph.drawPoint(ctx, x, y)
     },
     getDimensionsHandle() {
-      this.graph.getDimensionsHandle()
+      //this.graph.getDimensionsHandle()
     },
     toggleMenu(){
-      this.graph.toggleMenu()
+      //this.graph.toggleMenu()
     },
     onAddFuncButtonClick(){
-      this.graph.onAddFuncButtonClick()
+      //this.graph.onAddFuncButtonClick()
     },
     onRemoveFuncButtonClick(index){
-      this.graph.onRemoveFuncButtonClick(index)
+      //this.graph.onRemoveFuncButtonClick(index)
     },
     wheelEventHandle(event){
-      this.graph.wheelEventHandle(event)
+      //this.graph.wheelEventHandle(event)
     }
   }
 })
