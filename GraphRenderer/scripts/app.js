@@ -12,11 +12,10 @@
 const app = Vue.createApp({
   // data, functions
   data() {
-
-    const graph = new Graph;
+    const main = new Main;
 
     return {
-      graph
+      main
     };
   },
 
@@ -60,16 +59,6 @@ const app = Vue.createApp({
     },
     toggleMenu(){
       this.graph.toggleMenu()
-    },
-    keyUpHandle(index){
-      try{
-        console.log(index)
-        functions[index] = document.getElementById(`funcInput${index}`).innerHTML
-        this.drawFunction()
-      }
-      catch(e){
-        console.log("Exception: " + e)
-      }
     },
     onAddFuncButtonClick(){
       this.graph.onAddFuncButtonClick()

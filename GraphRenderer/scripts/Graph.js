@@ -1,3 +1,13 @@
+// HOMEWORK: FIX CODE STRUCTURE, GRAPH MOVING, 
+// COLOR AND LINE WIDTH, ADD DERIVATIVE!!!!!!!
+// AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+
+// y = kx + b
+// it is lim (f(x + dx) - f(x)) / dx = k
+// + draw dot there
+
+
 class Graph {
 
   xDistance = 2
@@ -15,10 +25,14 @@ class Graph {
   zoomStep = 1.5
   dotSize = 4
   canMove = true
-  functions = ["x*x", "x+5"]
+
+  id: 'canvas', 
+  WIN: this.WIN, 
+  width: 500, 
+  height: 500, 
 
   drawFunction() {
-    const F = []
+    const F = [];
     for (let i = 0; i < this.functions.length; i++) {
       const f = function (x) {
         return eval(this.functions[i])
@@ -37,16 +51,6 @@ class Graph {
     data.width = data.width || this.width;
     return (x - data.xMin) / (data.xMax - data.xMin) * data.width
   }
-
-  /*
-  function xs(x) {
-        return (((x - win.left) * canvas.width) / win.width);
-    }
-
-    function ys(y) {
-        return (((-y - win.bottom) * canvas.height) / win.height);
-    }
-  */
 
   // Data: yMin, yMax, cHeight
   yCoord(y, data) {
@@ -115,6 +119,7 @@ class Graph {
   // Data: xDistance, yDistance, wHeight, wWidth, cWidth, cHeigth, 
   //       xMin, xMax, yMin, yMax, x0, y0
   setupCanvas(data) {
+    console.log(typeof(this.functions[0]))
     data = data || {}
 
     data.xDistance = data.xDistance || this.xDistance
@@ -254,21 +259,9 @@ class Graph {
     console.log("toggleMenu")
   }
 
-  getZero(f, a, b, eps=0.001){
-    if(f(a) * f(b) > 0)
-      return null
-    if(Math.abs(f(a)-f(b)) <= eps)
-      return (a+b)/2
-    const half = (a+b)/2;
-    if(f(a) * f(half) <= eps)
-      return this.getZero(f, a, half, eps)
-    if(f(half) * f(b) <= eps)
-      return this.getZero(f, half, b, eps)
-  }
-
   getDimensionsHandle() {
     this.width = document.documentElement.clientWidth
-    this.height = document.documentElement.clientHeight*0.7
+    this.height = document.documentElement.clientHeight
     this.setupCanvas()
     this.drawFunction()
   }
@@ -279,14 +272,6 @@ class Graph {
     this.xMin -= delta
     this.setupCanvas()
     this.drawFunction()
-  }
-
-  getClientWindowWidth() {
-    return document.documentElement.clientWidth
-  }
-
-  getClientWindowHeight() {
-    return document.documentElement.clientHeight
   }
 }
 

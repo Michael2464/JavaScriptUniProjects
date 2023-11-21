@@ -12,7 +12,6 @@
 </head>
 
 <body>
-
   
   <div id="app">
     <span class="options">
@@ -33,7 +32,7 @@
   
           <div class="textareaDiv">
             <div v-for="(func, index) in graph.functions.length" class="textareaDivElem">
-              <textarea v-bind:id="`funcInput${index}`" name="funcInput" rows="16" cols="40" @keyup="keyUpHandle({index})"></textarea>
+              <textarea v-bind:id=`funcInput${index}` name="funcInput" rows="16" cols="40" @keyup="keyUpHandle({index})">{{graph.functions[index]}}</textarea>
               <button @click="onRemoveFuncButtonClick({index})">-</button>
             </div>
           </div>
@@ -48,6 +47,8 @@
   </div>
 
   <script src="scripts/Graph.js"></script>
+  <script src="scripts/UI.js"></script>  
+  <script src="scripts/Main.js"></script>
   <script src="scripts/app.js"></script>
 </body>
 
