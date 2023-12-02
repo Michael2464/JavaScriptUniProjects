@@ -17,8 +17,8 @@ function createButton(i) {
 }
 
 function createTakeMoneyButton(){
-    let button = document.createElement('button');
-    button.classList.add("myButton");
+    let button = document.createElement('button')
+    button.classList.add("myButton")
     button.innerHTML = "Take Money"
 
     button.addEventListener("click", () => {            

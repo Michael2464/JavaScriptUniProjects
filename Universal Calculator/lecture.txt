@@ -1,0 +1,92 @@
+Object oriented programming (JS)
+
+It makes code structured and more simple.
+It has some principles:
+  1. Inferitance  (get all methods from parent object) 
+  2. Incapsulation (requirement that functionality fully build into one object)
+  3. Polymorphysm (comes from children, possibility to refacture methods in a child object)
+
+All those principles are present in classes.
+
+Inferitance works with special methods of constructor
+fucntion f(p){
+  this.value = 123;
+}
+function g(p){
+  f.call(this, p);
+}
+You can inherit only from one parent (object)
+If you need to inherit multiple parents, inherit them one after another.
+
+The rule of inheritance
+Inheritance should be the least in your project. 
+
+
+Prototypes in JS
+Any object in JS has prototype. Prototype - specialized object which can be redefined, 
+defined or inherited. 
+
+const data = {
+  key1: 1,
+  key2: 2
+};
+const obj = {};
+obj.prototype = data;
+
+В новом стандарте добавлена конструкция Класс, которая является синтаксическим сахаром над прототипами 
+(класс - обертка над прототипом)
+
+Объявление класса:
+class Helicopter {
+  constructor(model, seriusNumber, force){
+    this.model = model;
+    this.seriusNumber = seriusNumber;
+    this.force = force;
+    this.engine = "OFF";
+  }
+  toEat(){
+    return "go fuck yourself";
+  }
+  startEngine() {
+    this.engine = "ON";
+  }
+  flyAway(){
+    console.log("FLYING AWAY....");
+  }
+}
+class Human extends Helicopter {
+
+  constructor(name, money = 0) {
+    ("Model S", "746x2-345", 2500);
+
+    this.name = name;
+    this.money = money;
+    this.health = 100;
+  }
+
+  toEat(){
+    super.toEat();
+    this.money -= random(200, 500);
+    this.health += random(30, 40);
+  }
+  toLive(){
+    this.toEat();
+  }
+  toCallAmbulance(){
+    this.money -= random(43879, 9748923);
+
+  }
+}
+const human1 = new Human("John", 10000);
+const human2 = new Human("Mike", 3476908);
+
+Поскольку класс - обертка над прототипом, а прототип - объект, то все свойства и методы класса по умолчанию публичные. 
+У классов есть несколько методов, присутствующих там по умолчанию (конструктор, деструктор).
+Конструктор - при создании экземпляра класса
+Деструкторов нет, но он вызывается при уничтожении экземпляра класса. 
+Если класс конструктора не имеет своего конструктора, то этоо наследование можно аким и остаивть.
+Если класс потомок имеет свой конструктор, то внутри конструктора потомка обязательно надо вызвать конструктор родителя. 
+При переопределении метода родителя в потомке, можно вызивать как неизменный метод родителя, так и переопределенный метод потомка. 
+
+Объявление класса осуществляется в новом файле, где только этот класс и название файла совпадает с названием класса, а 
+название класса всегда с большой буквы. 

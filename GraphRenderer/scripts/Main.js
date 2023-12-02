@@ -22,7 +22,7 @@ class Main {
       }
     })
 
-    new UI(this.graph, {
+    this.ui = new UI(this.functions, {
       addFunction: (f, num) => this.addFunction(f, num),
       delFunction: (index) => this.delFunction(index)
     })
@@ -34,28 +34,35 @@ class Main {
     this.WIN.height += delta
     this.WIN.left -= delta * 0.5
     this.WIN.bottom -= delta * 0.5
+
     this.render() // update canvas view
   }
 
-  addFunction(f, num) {
+  onAddFunction(f, num, tan = false) {
     this.functions[num] = {
       f,
       color: '#f00',
-      width: 2
-    };
-    render();
+      width: 2,
+      tangent: tan
+    }
+    render()
   }
 
-  delFunction(index) {
+  onDeleteFunction(index) {
     this.functions.splice(index, 1)
     render()
   }
 
+  toggleMenu() {
+    const subMenu = document.getElementById("menuWrap")
+    subMenu.classList.toggle("open-menu")
+  }
+
   // Renders everything
-  render(){
+  render() {
     this.graph.clear()
-    this.drawAxis();
-    this.functions.forEach(func => func && this.drawFunction(func.f, func.color, func.width))
+    this.drawAxis()
+    this.functions.forEach(func => func && this.drawFunction(func.f, func.color, func.width, func.tangent))
   }
 
   drayAxis() {
@@ -65,9 +72,9 @@ class Main {
     this.graph.drawLine(this.WIN.BOTTOM, 0, this.WIN.BOTTOM + this.WIN.height, 0, 'black')
 
     // Subdivisions
-    for (var i = Math.ceil(WIN.left); i < WIN.left + WIN.width; i++) 
+    for (var i = Math.ceil(WIN.left); i < WIN.left + WIN.width; i++)
       graph.line(i, WIN.bottom, i, WIN.bottom + WIN.height, '#0003')
-    for (var i = Math.floor(WIN.left); i > WIN.left; i--) 
+    for (var i = Math.floor(WIN.left); i > WIN.left; i--)
       graph.line(i, WIN.bottom, i, WIN.bottom + WIN.height, '#0003')
     for (var i = Math.ceil(WIN.bottom); i < WIN.bottom + WIN.height; i++)
       graph.line(WIN.left, i, WIN.left + WIN.width, i, '#0003')
@@ -76,16 +83,61 @@ class Main {
 
   }
 
-  drawFunction(f, color, width, n = 200) {
+  drawFunction(f, color, width, tan = false, isDashed = false, n = 200) {
     let x = this.WIN.LEFT
     const dx = this.WIN.WIDTH / n
 
-    while(x <= this.WIN.width + this.WIN.LEFT){
-      const isDashed = Math.abs(f(x + dx) - f(x)) >= this.WIN.height
-      this.graph.drawLine(x, f(x), x+dx, f(x+dx), color, width, isDashed)
-      x+=dx
+    while (x <= this.WIN.width + this.WIN.LEFT) {
+      const dash = isDashed || Math.abs(f(x + dx) - f(x)) >= this.WIN.height
+      this.graph.drawLine(x, f(x), x + dx, f(x + dx), color, width, dash)
+      x += dx
     }
     // Draw function name as text here
+    if (tan)
+      this.drawTangentFunction(f, 1) // test, actually pass mouseX coordinate here
+  }
+
+  drawTangentFunction(f, x, dx = 0.001) {
+    // y = ax + b
+    const a = (f(x + dx) - f(x)) / dx
+    const b = f(x) - a * x
+    let tanF = (x) => a * x + b
+
+    this.drawFunction(tanF, 'blue', 2, true)
+  }
+
+  // 25.11.2023
+  getIntegral(f, a, b, subDiv=1000){
+    const dx = (b-a)/subDiv
+    let x = a
+    let sum = 0;
+    while(x <= b){
+      sum += 0.5 * dx * (Math.abs(f(x)) + Math.abs(f(x+dx)))
+    }
+    return sum;
+  }  
+
+  drawIntegral(f, a, b, subDiv=100){
+    if(a == b)
+      return
+
+    const dx = (b-a)/subDiv
+    let x = a
+    const points = [{x, y:0}]
+    while(x <= b){
+      x += dx
+      points.push({x, y:f(x)})
+    }
+    points.push({x:b, y:0})
+    this.graph.drawPolygon(points)
+
+
+  }
+
+  getDimensionsHandle() {
+    this.graph.width = window.innerWidth
+    this.graph.height = window.innerHeight
+    render()
   }
 
   getZero(f, a, b, eps = 0.001) {

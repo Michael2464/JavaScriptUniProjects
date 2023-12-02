@@ -25,7 +25,7 @@
           
           <div class="menu-buttons">
             <h1>Function Renderer</h1>
-            <button @click="onAddFuncButtonClick">Add</button>
+            <button @click="onAddFunction">Add</button>
           </div>
           
           <hr>
@@ -33,7 +33,8 @@
           <div class="textareaDiv">
             <div v-for="(func, index) in graph.functions.length" class="textareaDivElem">
               <textarea v-bind:id=`funcInput${index}` name="funcInput" rows="16" cols="40" @keyup="keyUpHandle({index})">{{graph.functions[index]}}</textarea>
-              <button @click="onRemoveFuncButtonClick({index})">-</button>
+              <button @click="onRemoveFunction({index})">-</button>
+              <input type="checkbox" v-bind:id=`funcInput${index}`>
             </div>
           </div>
   
@@ -41,14 +42,13 @@
       </div>
     </span>
 
-    <canvas ref="canvas" id="canvas" width="500" height="400">
-
-    </canvas>
+    <canvas ref="canvas" id="canvas" width="500" height="500"></canvas>
   </div>
 
   <script src="scripts/Graph.js"></script>
   <script src="scripts/UI.js"></script>  
   <script src="scripts/Main.js"></script>
+
   <script src="scripts/app.js"></script>
 </body>
 
