@@ -6,31 +6,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Universal Calculator</title>
-  <link rel="stylesheet" media="screen" href="Styles/styles.css">
-</head>
-
-<body>
-  <h1 id="title">Universal Calculator</h1>
-  <div id="mainDiv">
-    <input class="element" id="input1" oninput="calculateResult()">
-    <select class="element" id="operation" onChange="calculateResult()">
-      <option value="+">+</option>
-      <option value="-">-</option>
-      <option value="*">*</option>
-      <option value="/">/</option>
-      <option value="^">^</option>
-    </select>
-    <input class="element" id="input2" oninput="calculateResult()">
-    <p>=</p>
-    <textarea class="element" id="result"></textarea>
-    <button class="element" onclick="calculateResult()">Calculate</button>
-  </div>
-
+  <link rel="stylesheet" href="styles.css">
   <script src="Scripts/Types/Complex.js"></script>
   <script src="Scripts/Calculators/RealCalculator.js"></script>
   <script src="Scripts/Calculators/ComplexCalculator.js"></script>
   <script src="Scripts/logic.js"></script>
   <script src="Scripts/main.js"></script>
+</head>
+
+<body>
+  <h1 id="title">Universal Calculator</h1>
+  <div id="mainDiv">
+    <input class="element" id="input1">
+    <select class="element" id="operation">
+      <option class="option" data-operand="add">+</option>
+      <option class="option" data-operand="sub">-</option>
+      <option class="option" data-operand="mult">*</option>
+      <option class="option" data-operand="div">/</option>
+      <option class="option" data-operand="pow">^</option>
+    </select>
+    <input class="element" id="input2">
+    <p>=</p>
+    <textarea class="element" id="result"></textarea>
+    <button class="element">Calculate</button>
+  </div>
+
+ 
+
 </body>
 
 </html>

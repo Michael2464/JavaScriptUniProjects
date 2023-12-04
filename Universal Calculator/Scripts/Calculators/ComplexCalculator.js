@@ -1,29 +1,29 @@
 class ComplexCalculator extends RealCalculator {
 
-  add(a, b) { return new Complex(a.r + b.r, a.i + b.i); }
-  sub(a, b) { return new Complex(a.r - b.r, a.i - b.i); }
-  multiply(a, b) {
-    const complex = new Complex;
-    complex.r = a.r * b.r - a.i * b.i;
-    complex.i = a.r * b.i + a.i * b.r;
+  add(a, b) { console.log("add"); return new Complex(a.re + b.re, a.im + b.im); }
+  sub(a, b) { console.log("sub"); return new Complex(a.re - b.re, a.im - b.im); }
+  mult(a, b) {
+    const complex = new Complex(a.re * b.re - a.im * b.im,
+      a.re * b.im + a.im * b.re);
     return complex;
   }
-  divide(a, b) { 
-    const complex = new Complex;
-    // to be implemented
-    
-    return -1; 
+  div(a, b) {
+    const m = a.im * a.im + b.im * b.im;
+    return new Complex(
+      (a.re * b.re + a.im * b.im) / m,
+      (a.im * b.re - a.re * b.im) / m
+    );
   }
-  pow(a, n) { 
-    const complex = new Complex(a.r, a.i);
-    for(let i = 1; i < n; i++){
+  pow(a, n) {
+    const complex = new Complex(a.re, a.im);
+    for (let i = 1; i < n; i++) {
       complex = this.multiply(complex, a);
     }
-    return complex; 
+    return complex;
   }
-  prod(a, p) { return new Complex(a.r * p, a.i * p); }
+  prod(a, p) { return new Complex(a.re * p, a.im * p); }
 
-  one() { return new Complex(super.one(), super.zero()); }
-  zero() { return new Complex(super.zero(), super.zero()); }
+  one() { return new Complex(super.one()); }
+  zero() { return new Complex; }
 
 }

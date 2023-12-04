@@ -1,8 +1,8 @@
 class Complex{
 
-  constructor(r = 0, i = 0){
-    this.r = r;
-    this.i = i;
+  constructor(re = 0, im = 0){
+    this.re = re;
+    this.im = im;
   }
 
 }
