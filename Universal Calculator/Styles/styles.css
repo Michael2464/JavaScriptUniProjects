@@ -1,1 +1,15 @@
+body{
+  background-color: rgb(30,30,30);
+  color: rgb(200,200,200);
 
+}
+
+#mainDiv{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.element{
+  margin: 4px;
+}

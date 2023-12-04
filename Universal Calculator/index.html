@@ -1,19 +1,35 @@
 <!DOCTYPE HTML>
 <html>
- <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Universal Calculator</title>
-    <link rel="stylesheet" media="screen" href="Styles/styles.css">
- </head>
- <body>
 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Universal Calculator</title>
+  <link rel="stylesheet" media="screen" href="Styles/styles.css">
+</head>
 
-   <script src="Scripts/Types/Complex.js"></script>
-   <script src="Scripts/Calculators/ComplexCalculator.js"></script>
-   <script src="Scripts/Calculators/RealCalculator.js"></script>
-   <script src="Scripts/main.js"></script>
- </body> 
+<body>
+  <div id="mainDiv">
+    <input class="element" id="input1" type="number" oninput="calculateResult()">
+    <select class="element" id="operation" onChange="calculateResult()">
+      <option value="+">+</option>
+      <option value="-">-</option>
+      <option value="*">*</option>
+      <option value="/">/</option>
+      <option value="^">^</option>
+    </select>
+    <input class="element" id="input2" type="number" oninput="calculateResult()">
+    <p>=</p>
+    <textarea class="element" id="result"></textarea>
+    <button class="element" onclick="calculateResult()">Calculate</button>
+  </div>
+
+  <script src="Scripts/Types/Complex.js"></script>
+  <script src="Scripts/Calculators/RealCalculator.js"></script>
+  <script src="Scripts/Calculators/ComplexCalculator.js"></script>
+  <script src="Scripts/logic.js"></script>
+  <script src="Scripts/main.js"></script>
+</body>
+
 </html>
-

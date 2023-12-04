@@ -1,1 +1,4 @@
-const s = new Complex;
+document.onload = function(){
+  initialize();
+}
+
