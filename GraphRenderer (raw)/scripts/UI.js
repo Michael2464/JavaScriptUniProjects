@@ -1,8 +1,7 @@
 class UI {
-
   constructor(functions, callbacks) {
-    this.functions = functions
-    this.callbacks = callbacks
+    this.functions = functions;
+    this.callbacks = callbacks;
   }
 
   keyupHandler() {

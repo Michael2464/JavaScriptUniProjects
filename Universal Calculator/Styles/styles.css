@@ -8,8 +8,52 @@ body{
   display: flex;
   align-items: center;
   justify-content: center;
+
+  border-radius: 30px;
+  border-color: blueviolet;
 }
 
 .element{
   margin: 4px;
+}
+
+#title{
+  text-align: center;
+}
+
+input{
+  background-color: rgb(70,70,70);
+  border-style: none;
+  height: 35px;
+  min-height: 35px;
+  min-width: 80px;
+  width: 120px;
+  border-radius: 10px;
+  color: rgb(200,200,200);
+  font-size: 18px;
+  text-align: center;
+  font-weight: bold;
+}
+
+#operation{
+  background-color: rgb(100,100,100);
+  border-style: none;
+  height: 20px;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+
+}
+
+#result{
+  background-color: rgb(70,70,70);
+  border-style: none;
+  border-radius: 10px;
+  text-align: center;
+  height: 35px;
+  min-height: 35px;
+  min-width: 80px;
+  font-size: 20px;
+  font-weight: bold;
+  color: rgb(200,200,200);
 }

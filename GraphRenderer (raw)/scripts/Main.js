@@ -1,7 +1,8 @@
 class Main {
-
   constructor() {
     this.functions = []
+
+    this.canMove = false;
 
     this.WIN = {
       LEFT: -10,
@@ -18,7 +19,11 @@ class Main {
       width: 500,
       height: 500,
       callbacks: {
-        wheel: () => this.wheel()
+        wheel: () => this.wheel(),
+        mouseUp: () => this.mouseUp(),
+        mouseDown: () => this.mouseDown(),
+        mouseMove: () => this.mouseMove(),
+        mouseLeave: () => this.mouseLeave()
       }
     })
 
@@ -30,13 +35,24 @@ class Main {
 
   wheel(event) {
     const delta = (event.wheelDelta > 0) ? -this.zoomStep : this.zoomStep
-    this.WIN.width += delta
-    this.WIN.height += delta
-    this.WIN.left -= delta * 0.5
-    this.WIN.bottom -= delta * 0.5
+    this.WIN.width += delta;
+    this.WIN.height += delta;
+    this.WIN.left -= delta * 0.5;
+    this.WIN.bottom -= delta * 0.5;
 
-    this.render() // update canvas view
+    this.render(); 
   }
+
+  mouseUp() { canMove = false; }
+  mouseDown() { canMove = true; }
+  mouseMove(event){
+    if(this.canMove) {
+      this.WIN.LEFT -= this.graph.sx(event.movementX);
+      this.WIN.BOTTOM -= this.graph.sy(event.movementY);
+      this.render();
+    }
+  }
+  mouseLeave() { canMove = false; }
 
   onAddFunction(f, num, tan = false) {
     this.functions[num] = {
@@ -130,8 +146,6 @@ class Main {
     }
     points.push({x:b, y:0})
     this.graph.drawPolygon(points)
-
-
   }
 
   getDimensionsHandle() {
@@ -153,5 +167,3 @@ class Main {
   }
 
 }
-
-

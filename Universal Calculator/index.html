@@ -10,8 +10,9 @@
 </head>
 
 <body>
+  <h1 id="title">Universal Calculator</h1>
   <div id="mainDiv">
-    <input class="element" id="input1" type="number" oninput="calculateResult()">
+    <input class="element" id="input1" oninput="calculateResult()">
     <select class="element" id="operation" onChange="calculateResult()">
       <option value="+">+</option>
       <option value="-">-</option>
@@ -19,7 +20,7 @@
       <option value="/">/</option>
       <option value="^">^</option>
     </select>
-    <input class="element" id="input2" type="number" oninput="calculateResult()">
+    <input class="element" id="input2" oninput="calculateResult()">
     <p>=</p>
     <textarea class="element" id="result"></textarea>
     <button class="element" onclick="calculateResult()">Calculate</button>

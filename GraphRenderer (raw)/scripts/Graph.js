@@ -25,6 +25,10 @@ class Graph {
     this.ctx = this.canvas.getContext('2d');
     this.callbacks = options.callbacks;
     this.canvas.addEventListener('wheel', this.callbacks.wheel);
+    this.canvas.addEventListener('mousemove', this.callbacks.mouseMove);
+    this.canvas.addEventListener('mouseleave', this.callbacks.mouseLeave);
+    this.canvas.addEventListener('mouseup', this.callbacks.mouseUp);
+    this.canvas.addEventListener('mousedown', this.callbacks.mouseDown);
 
     console.log("Graph constructor");
   }
@@ -35,6 +39,14 @@ class Graph {
 
   ys(y) {
     return this.canvas.height - (y - this.WIN.bottom) / this.WIN.height * this.canvas.height;
+  }
+
+  sx(x) {
+    return x * WIN.width / this.canvas.width;
+  }
+
+  sy(y) {
+    return -y * this.WIN.height / this.canvas.height;
   }
 
   clear() {
