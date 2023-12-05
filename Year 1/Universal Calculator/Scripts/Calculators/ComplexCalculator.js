@@ -8,7 +8,7 @@ class ComplexCalculator extends RealCalculator {
     return complex;
   }
   div(a, b) {
-    const m = a.im * a.im + b.im * b.im;
+    const m = b.re * b.re + b.im * b.im;
     return new Complex(
       (a.re * b.re + a.im * b.im) / m,
       (a.im * b.re - a.re * b.im) / m

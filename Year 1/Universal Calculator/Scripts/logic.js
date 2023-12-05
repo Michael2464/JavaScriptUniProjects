@@ -4,10 +4,11 @@ function initialize() {
     const a = document.getElementById("input1").value;
     const b = document.getElementById("input2").value;
     const operand = event.target.dataset.operand;
+
     const arrA = a.split(' ');
     const arrB = b.split(' ');
 
-    console.log(arrA, arrB);
+    console.log(arrA);
 
     if (arrA.length === 1 && arrB.length === 1) {
       const calc = new RealCalculator;
@@ -15,18 +16,30 @@ function initialize() {
       document.getElementById("result").value = result;
     } else {
       const calc = new ComplexCalculator;
-
-      console.log(calc);
+      
+      // If 'num', 'operator', 'num' then concatenate into one
+      let imA = arrA.length === 3 ? arrA[1]+arrA[2] : arrA[1];
+      imA = imA.replace('i', '');
+      let imB = arrB.length === 3 ? arrB[1]+arrB[2] : arrB[1];
+      imB = imB.replace('i', '');
+      
+      console.log(imA);
 
       const result = calc[operand](
-        new Complex(arrA[0] - 0, arrA[1] - 0),
-        new Complex(arrB[0] - 0, arrB[1] - 0)
+        new Complex(arrA[0] - 0, imA - 0),
+        new Complex(arrB[0] - 0, imB - 0)
       );
 
-      console.log(result);  
+      let str = '';
+      if(result.im < 0) {
+        result.im *= -1;
+        str = `${result.re} - ${result.im}i`;
+      } 
+      else {
+        str = `${result.re} + ${result.im}i`;
+      }
+      document.getElementById("result").value = str;
 
-      document.getElementById("result")
-        .value = `${result.re} ${result.im}`;
     }
   }
 
@@ -34,9 +47,5 @@ function initialize() {
   buttons.forEach(button => {
     button.addEventListener('click', operandHandler);
   });
-
-  const calc = new ComplexCalculator;
-  console.log(calc.mult(new Complex(1, 0), new Complex(1, 0)));
-  console.log(calc.div(new Complex(1, 0), new Complex(1, 0)));
 
 }
