@@ -1,7 +1,7 @@
 class ComplexCalculator extends RealCalculator {
-
-  add(a, b) { console.log("add"); return new Complex(a.re + b.re, a.im + b.im); }
-  sub(a, b) { console.log("sub"); return new Complex(a.re - b.re, a.im - b.im); }
+  // TODO: Calculations: real and complex numbers
+  add(a, b) { return new Complex(a.re + b.re, a.im + b.im); }
+  sub(a, b) { return new Complex(a.re - b.re, a.im - b.im); }
   mult(a, b) {
     const complex = new Complex(a.re * b.re - a.im * b.im,
       a.re * b.im + a.im * b.re);
@@ -17,7 +17,7 @@ class ComplexCalculator extends RealCalculator {
   pow(a, n) {
     const complex = new Complex(a.re, a.im);
     for (let i = 1; i < n; i++) {
-      complex = this.multiply(complex, a);
+      complex *= this.prod(complex, a);
     }
     return complex;
   }

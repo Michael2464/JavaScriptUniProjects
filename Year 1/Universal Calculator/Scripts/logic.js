@@ -1,46 +1,49 @@
+function getComplex(value) {
+  const arr = value.split(' ');
+  
+  if (arr.length == 2) {
+    const a = arr[0];
+    let b = arr[1];
+    b = b.replace('i', '');
+    return new Complex(a - 0, b - 0);
+  }
+  if (arr.length == 3) {
+    const a = arr[0];
+    let b = arr[1] + arr[2];
+    b = b.replace('i', '');
+    return new Complex(a - 0, b - 0);
+  }
+  return null;
+}
+
+function getValue(value) {
+  return getComplex(value) || (value - 0);
+}
+
+function toString(value) {
+  if (value instanceof Complex) {
+    let str = '';
+    if (value.im < 0) {
+      value.im *= -1;
+      str = `${value.re} - ${value.im}i`;
+    } else {
+      str = `${value.re} + ${value.im}i`;
+    }
+    return str;
+  }
+  return value.toString();
+}
+
 function initialize() {
 
   const operandHandler = (event) => {
-    const a = document.getElementById("input1").value;
-    const b = document.getElementById("input2").value;
+    const a = getValue(document.getElementById("input1").value);
+    const b = getValue(document.getElementById("input2").value);
     const operand = event.target.dataset.operand;
+    const calc = (a instanceof Complex) ? new ComplexCalculator : new RealCalculator;
 
-    const arrA = a.split(' ');
-    const arrB = b.split(' ');
-
-    console.log(arrA);
-
-    if (arrA.length === 1 && arrB.length === 1) {
-      const calc = new RealCalculator;
-      const result = calc[operand](a - 0, b - 0);
-      document.getElementById("result").value = result;
-    } else {
-      const calc = new ComplexCalculator;
-      
-      // If 'num', 'operator', 'num' then concatenate into one
-      let imA = arrA.length === 3 ? arrA[1]+arrA[2] : arrA[1];
-      imA = imA.replace('i', '');
-      let imB = arrB.length === 3 ? arrB[1]+arrB[2] : arrB[1];
-      imB = imB.replace('i', '');
-      
-      console.log(imA);
-
-      const result = calc[operand](
-        new Complex(arrA[0] - 0, imA - 0),
-        new Complex(arrB[0] - 0, imB - 0)
-      );
-
-      let str = '';
-      if(result.im < 0) {
-        result.im *= -1;
-        str = `${result.re} - ${result.im}i`;
-      } 
-      else {
-        str = `${result.re} + ${result.im}i`;
-      }
-      document.getElementById("result").value = str;
-
-    }
+    let result = calc[operand](a, b);
+    document.getElementById("result").value = toString(result);
   }
 
   const buttons = document.querySelectorAll(".option");

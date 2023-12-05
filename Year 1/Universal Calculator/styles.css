@@ -21,6 +21,10 @@ body{
   text-align: center;
 }
 
+#equals{
+  font-size: 24px;
+}
+
 input{
   background-color: rgb(70,70,70);
   border-style: none;
