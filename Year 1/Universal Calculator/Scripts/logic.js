@@ -1,4 +1,6 @@
 function getComplex(value) {
+  // TODO: Should work without spaces at all
+  // TODO: 2 + i !!!! When i is single, it will probably break
   const arr = value.split(' ');
   
   if (arr.length == 2) {
@@ -16,22 +18,47 @@ function getComplex(value) {
   return null;
 }
 
-function getValue(value) {
-  return getComplex(value) || (value - 0);
+function getVector(str){
+  if(str instanceof Array)
+    return new Vector(str);
+  if(str && typeof str === 'string'){
+    const arr = str.replace('(', '').replace(')', '').split(' ').map(el => el - 0);
+    return new Vector(arr);
+  }
+  return null;
 }
 
-function toString(value) {
-  if (value instanceof Complex) {
-    let str = '';
-    if (value.im < 0) {
-      value.im *= -1;
-      str = `${value.re} - ${value.im}i`;
-    } else {
-      str = `${value.re} + ${value.im}i`;
+function getMatrix(str){
+  if(str instanceof Array)
+    return new Matrix(str);
+  if(str && typeof str === 'string'){
+    const arr = str.split('\n');
+    const value = [];
+    for(let i = 0; i < arr.length; i++){
+      value.push(arr[i].split(', ').map(el => el - 0));
     }
-    return str;
+    if(value[0] instanceof Array) {
+      return new Matrix(value);
+    }
   }
-  return value.toString();
+  return null;
+}
+
+function getValue(str) {
+  if(str.includes('(')) return getVector(str);
+  if(str.includes('i')) return getComplex(str);
+  if(str.includes('\n')) return getMatrix(str);
+  return str - 0;
+}
+
+function getCalculator(value){
+  if(value instanceof Vector)
+    return new VectorCalculator;
+  if(value instanceof Complex)
+    return new ComplexCalculator;
+  if(value instanceof Matrix)
+    return new MatrixCalculator;
+  return new RealCalculator;
 }
 
 function initialize() {
@@ -40,10 +67,10 @@ function initialize() {
     const a = getValue(document.getElementById("input1").value);
     const b = getValue(document.getElementById("input2").value);
     const operand = event.target.dataset.operand;
-    const calc = (a instanceof Complex) ? new ComplexCalculator : new RealCalculator;
+    const calc = getCalculator(a);
 
     let result = calc[operand](a, b);
-    document.getElementById("result").value = toString(result);
+    document.getElementById("result").value = result.toString();
   }
 
   const buttons = document.querySelectorAll(".option");

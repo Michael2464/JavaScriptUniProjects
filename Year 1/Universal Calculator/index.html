@@ -8,8 +8,12 @@
   <title>Universal Calculator</title>
   <link rel="stylesheet" href="styles.css">
   <script src="Scripts/Types/Complex.js"></script>
+  <script src="Scripts/Types/Vector.js"></script>
+  <script src="Scripts/Types/Matrix.js"></script>
   <script src="Scripts/Calculators/RealCalculator.js"></script>
   <script src="Scripts/Calculators/ComplexCalculator.js"></script>
+  <script src="Scripts/Calculators/VectorCalculator.js"></script>
+  <script src="Scripts/Calculators/MatrixCalculator.js"></script>
   <script src="Scripts/logic.js"></script>
   <script src="Scripts/main.js"></script>
 </head>
@@ -17,7 +21,7 @@
 <body>
   <h1 id="title">Universal Calculator</h1>
   <div id="mainDiv">
-    <input class="element" id="input1">
+    <textarea class="myInput" class="element" id="input1"></textarea>
     <select class="element" id="operation">
       <option class="option" data-operand="add">+</option>
       <option class="option" data-operand="sub">-</option>
@@ -26,7 +30,7 @@
       <option class="option" data-operand="prod">prod</option>
       <option class="option" data-operand="pow">^</option>
     </select>
-    <input class="element" id="input2">
+    <textarea class="myInput" class="element" id="input2"></textarea>
     <p id="equals">=</p>
     <textarea class="element" id="result"></textarea>
   </div>
