@@ -84,6 +84,7 @@ function initialize()
   {
     const a = getValue(document.getElementById("input1").value);
     const b = getValue(document.getElementById("input2").value);
+    console.log(b);
     const operand = event.target.dataset.operand;
     const calc = getCalculator(a);
 

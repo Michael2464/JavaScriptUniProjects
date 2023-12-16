@@ -1,15 +1,20 @@
-class VectorCalculator extends RealCalculator{
+class VectorCalculator
+{
+  constructor(calculator = new RealCalculator){
+    this.calculator = calculator;
+  }
+
   add(a, b) { 
-    return new Vector(a.values.map((elem, i) => super.add(elem, b.values[i])));
+    return new Vector(a.values.map((elem, i) => this.calculator.add(elem, b.values[i])));
   }
   sub(a, b) { 
-    return new Vector(a.values.map((elem, i) => super.sub(elem, b.values[i])));
+    return new Vector(a.values.map((elem, i) => this.calculator.sub(elem, b.values[i])));
   }
   mult(a, b) { 
     return new Vector([
-      super.sub(super.mult(a.values[1], b.value[2]), super.mult(a.values[2], b.values[1])),
-      super.sub(super.mult(a.values[2], b.value[0]), super.mult(a.values[0], b.values[2])),
-      super.sub(super.mult(a.values[0], b.value[1]), super.mult(a.values[1], b.values[0]))
+      this.calculator.sub(this.calculator.mult(a.values[1], b.value[2]), this.calculator.mult(a.values[2], b.values[1])),
+      this.calculator.sub(this.calculator.mult(a.values[2], b.value[0]), this.calculator.mult(a.values[0], b.values[2])),
+      this.calculator.sub(this.calculator.mult(a.values[0], b.value[1]), this.calculator.mult(a.values[1], b.values[0]))
     ]); 
   }
   div(a, b) { return null; }
@@ -20,7 +25,7 @@ class VectorCalculator extends RealCalculator{
   }
 
   prod(a, p) {
-    return new Vector(a.values.map(elem => super.prod(elem, p)));
+    return new Vector(a.values.map(elem => this.calculator.prod(elem, p)));
   }
 
   one() { 
@@ -31,7 +36,7 @@ class VectorCalculator extends RealCalculator{
   zero(lenght) { 
     const values = [];
     for (let i = 0; i < lenght; i++)
-      values.push(super.zero());
+      values.push(this.calculator.zero());
     return new Vector(values); 
   }
 }

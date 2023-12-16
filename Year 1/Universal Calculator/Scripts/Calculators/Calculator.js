@@ -11,9 +11,9 @@ class Calculator {
 
   get(elem) {
     if (elem instanceof Matrix)
-      return new MatrixCalculator(this.get(elem.values[0][0]));
+      return new MatrixCalculator(/*this.get(elem.values[0][0])*/);
     if (elem instanceof Vector)
-      return new VectorCalculator(this.get(elem.values[0]));
+      return new VectorCalculator(/*this.get(elem.values[0])*/);
     if (elem instanceof Complex)
       return new ComplexCalculator;
     return new RealCalculator;
@@ -22,6 +22,21 @@ class Calculator {
   // Add other methods
   add(a, b) {
     return this.get(a).add(a, b);
+  }
+  sub(a, b) {
+    return this.get(a).sub(a, b);
+  }
+  mult(a, b) {
+    return this.get(a).mult(a, b);
+  }
+  div(a, b) {
+    return this.get(a).div(a, b);
+  }
+  prod(a, b) {
+    return this.get(a).prod(a, b);
+  }
+  pow(a, b) {
+    return this.get(a).pow(a, b);
   }
 
   zero(type, elem) {

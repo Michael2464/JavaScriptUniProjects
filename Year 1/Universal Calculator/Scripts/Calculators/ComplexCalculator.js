@@ -1,7 +1,9 @@
 class ComplexCalculator 
 {
-  // TODO: Update methods
-  
+  constructor(calculator = new RealCalculator){
+    this.calculator = calculator;
+  }
+
   add(a, b) { return new Complex(a.re + b.re, a.im + b.im); }
   sub(a, b) { return new Complex(a.re - b.re, a.im - b.im); }
 
@@ -28,7 +30,7 @@ class ComplexCalculator
 
   prod(a, p) { return new Complex(a.re * p, a.im * p); }
 
-  one() { return new Complex(super.one()); }
+  one() { return new Complex(this.calculator.one()); }
   zero() { return new Complex; }
 
 }

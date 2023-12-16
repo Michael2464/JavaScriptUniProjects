@@ -21,7 +21,7 @@ class MatrixCalculator
     const c = this.zero(lenght);
     for (let i = 0; i < lenght; i++){
       for (let j = 0; j < lenght; j++){
-        let sum = this.calculator.zero('Complex', a);
+        let sum = this.calculator.zero();
         for(let k = 0; k < lenght; k++){
           sum = this.calculator.add(sum, this.calculator.mult(a.values[i][k], b.values[k][j]));
         }
@@ -35,7 +35,7 @@ class MatrixCalculator
 
   prod(a, p) {
     return new Matrix(a.values.map(
-        arr => arr.map(elem => super.prod(elem, p))
+        arr => arr.map(elem => this.calculator.prod(elem, p))
       ));
   }
 
@@ -44,7 +44,7 @@ class MatrixCalculator
     for (let i = 0; i < lenght; i++){
       values.push([]);
       for (let j = 0; j < lenght; j++){
-        values[i][j] = i===j ? super.one() : super.zero();
+        values[i][j] = i===j ? this.calculator.one() : this.calculator.zero();
       }
     }
     return new Matrix(values); 
@@ -55,7 +55,7 @@ class MatrixCalculator
     for (let i = 0; i < lenght; i++){
       values.push([]);
       for (let j = 0; j < lenght; j++){
-        values[i][j] = super.zero();
+        values[i][j] = this.calculator.zero();
       }
     }
     return new Matrix(values); 
