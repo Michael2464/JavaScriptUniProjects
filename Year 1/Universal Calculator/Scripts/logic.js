@@ -18,52 +18,70 @@ function getComplex(value) {
   return null;
 }
 
-function getVector(str){
+function getVector(str)
+{
   if(str instanceof Array)
     return new Vector(str);
-  if(str && typeof str === 'string'){
-    const arr = str.replace('(', '').replace(')', '').split(' ').map(el => el - 0);
+
+  if(str && typeof str === 'string')
+  {
+    const arr = str.replace('(', '').replace(')', '').split(' ').map(el => this.getValue(el));
     return new Vector(arr);
   }
   return null;
 }
 
-function getMatrix(str){
+function getMatrix(str)
+{
   if(str instanceof Array)
     return new Matrix(str);
-  if(str && typeof str === 'string'){
+
+  if(str && typeof str === 'string')
+  {
     const arr = str.split('\n');
     const value = [];
-    for(let i = 0; i < arr.length; i++){
-      value.push(arr[i].split(', ').map(el => el - 0));
-    }
-    if(value[0] instanceof Array) {
+
+    for(let i = 0; i < arr.length; i++)
+      value.push(arr[i].split(', ').map(el => this.getValue(el)));
+    
+    if(value[0] instanceof Array) 
       return new Matrix(value);
-    }
   }
   return null;
 }
 
-function getValue(str) {
-  if(str.includes('(')) return getVector(str);
-  if(str.includes('i')) return getComplex(str);
-  if(str.includes('\n')) return getMatrix(str);
+function getValue(str) 
+{
+  if(str.includes('(')) 
+    return getVector(str);
+
+  if(str.includes('i')) 
+    return getComplex(str);
+
+  if(str.includes('\n')) 
+    return getMatrix(str);
+
   return str - 0;
 }
 
-function getCalculator(value){
+function getCalculator(value)
+{
   if(value instanceof Vector)
     return new VectorCalculator;
+
   if(value instanceof Complex)
     return new ComplexCalculator;
+
   if(value instanceof Matrix)
     return new MatrixCalculator;
+
   return new RealCalculator;
 }
 
-function initialize() {
-
-  const operandHandler = (event) => {
+function initialize() 
+{
+  const operandHandler = (event) => 
+  {
     const a = getValue(document.getElementById("input1").value);
     const b = getValue(document.getElementById("input2").value);
     const operand = event.target.dataset.operand;

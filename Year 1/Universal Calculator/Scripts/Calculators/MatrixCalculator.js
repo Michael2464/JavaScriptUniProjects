@@ -1,13 +1,19 @@
-class MatrixCalculator extends RealCalculator{
+class MatrixCalculator
+{
+  // TODO: Update methods
+  
+  constructor(calculator = new RealCalculator){
+    this.calculator = calculator;
+  }
 
   add(a, b) { 
     return new Matrix(a.values.map(
-      (arr, i) => arr.map((elem, j) => super.add(elem, b.values[i][j]))
+      (arr, i) => arr.map((elem, j) => this.calculator.add(elem, b.values[i][j]))
       ));
   }
   sub(a, b) { 
     return new Matrix(a.values.map(
-      (arr, i) => arr.map((elem, j) => super.sub(elem, b.values[i][j]))
+      (arr, i) => arr.map((elem, j) => this.calculator.sub(elem, b.values[i][j]))
       ));
   }
   mult(a, b) { 
@@ -15,9 +21,9 @@ class MatrixCalculator extends RealCalculator{
     const c = this.zero(lenght);
     for (let i = 0; i < lenght; i++){
       for (let j = 0; j < lenght; j++){
-        let sum = super.zero(lenght);
+        let sum = this.calculator.zero('Complex', a);
         for(let k = 0; k < lenght; k++){
-          sum = super.add(sum, super.mult(a.values[i][k], b.values[k], [j]));
+          sum = this.calculator.add(sum, this.calculator.mult(a.values[i][k], b.values[k][j]));
         }
         sum.values[i][j] = sum;
       }
