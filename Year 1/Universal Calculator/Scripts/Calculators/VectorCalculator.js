@@ -20,22 +20,26 @@ class VectorCalculator
   div(a, b) { return null; }
 
   pow(a, n) { 
-    // IMPLEMENT
-    return null;
+    const vec = new Vector(a.values);
+    for(let i = 0; i < n; i++)
+      vec = this.mult(vec, vec);
+    return vec;
   }
 
   prod(a, p) {
     return new Vector(a.values.map(elem => this.calculator.prod(elem, p)));
   }
 
-  one() { 
-    // Implement
-    return null;
+  one(length) { 
+    const values = [];
+    for (let i = 0; i < length; i++)
+      values.push(this.calculator.one());
+    return new Vector(values);
   }
 
-  zero(lenght) { 
+  zero(length) { 
     const values = [];
-    for (let i = 0; i < lenght; i++)
+    for (let i = 0; i < length; i++)
       values.push(this.calculator.zero());
     return new Vector(values); 
   }

@@ -39,13 +39,13 @@ function getMatrix(str)
   if(str && typeof str === 'string')
   {
     const arr = str.split('\n');
-    const value = [];
+    const values = [];
 
     for(let i = 0; i < arr.length; i++)
-      value.push(arr[i].split(', ').map(el => this.getValue(el)));
-    
-    if(value[0] instanceof Array) 
-      return new Matrix(value);
+      values.push(arr[i].split(', ').map(el => this.getValue(el)));
+
+    if(values[0] instanceof Array) 
+      return new Matrix(values);
   }
   return null;
 }
@@ -84,7 +84,6 @@ function initialize()
   {
     const a = getValue(document.getElementById("input1").value);
     const b = getValue(document.getElementById("input2").value);
-    console.log(b);
     const operand = event.target.dataset.operand;
     const calc = getCalculator(a);
 

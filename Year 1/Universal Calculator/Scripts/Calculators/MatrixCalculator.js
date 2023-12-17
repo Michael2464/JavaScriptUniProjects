@@ -1,7 +1,5 @@
 class MatrixCalculator
 {
-  // TODO: Update methods
-  
   constructor(calculator = new RealCalculator){
     this.calculator = calculator;
   }
@@ -17,12 +15,12 @@ class MatrixCalculator
       ));
   }
   mult(a, b) { 
-    const lenght = a.values.lenght;
-    const c = this.zero(lenght);
-    for (let i = 0; i < lenght; i++){
-      for (let j = 0; j < lenght; j++){
+    const length = a.values.length;
+    const c = this.zero(length);
+    for (let i = 0; i < length; i++){
+      for (let j = 0; j < length; j++){
         let sum = this.calculator.zero();
-        for(let k = 0; k < lenght; k++){
+        for(let k = 0; k < length; k++){
           sum = this.calculator.add(sum, this.calculator.mult(a.values[i][k], b.values[k][j]));
         }
         sum.values[i][j] = sum;
@@ -39,22 +37,22 @@ class MatrixCalculator
       ));
   }
 
-  one(lenght) { 
+  one(length) { 
     const values = [];
-    for (let i = 0; i < lenght; i++){
+    for (let i = 0; i < length; i++){
       values.push([]);
-      for (let j = 0; j < lenght; j++){
+      for (let j = 0; j < length; j++){
         values[i][j] = i===j ? this.calculator.one() : this.calculator.zero();
       }
     }
     return new Matrix(values); 
   }
 
-  zero(lenght) { 
+  zero(length) { 
     const values = [];
-    for (let i = 0; i < lenght; i++){
+    for (let i = 0; i < length; i++){
       values.push([]);
-      for (let j = 0; j < lenght; j++){
+      for (let j = 0; j < length; j++){
         values[i][j] = this.calculator.zero();
       }
     }
