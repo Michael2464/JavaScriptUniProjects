@@ -41,7 +41,7 @@ class PolynomialCalculator
     })
 
     b.poly.forEach(elemB => {
-      if(!members.find(elem=>elem.power===elemB.power))
+      if(!members.find(elem => elem.power===elemB.power))
         members.push(new Member(elemB.value, elemB.power));
     })
 

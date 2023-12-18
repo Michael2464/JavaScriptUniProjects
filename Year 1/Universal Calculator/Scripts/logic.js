@@ -3,6 +3,12 @@ function getComplex(value) {
   // TODO: 2 + i !!!! When i is single, it will probably break
   const arr = value.split(' ');
   
+  if(arr.length == 1){
+    // 3+3i
+    let operInd = arr.search('-') == -1 ? arr.search('+') : arr.searc('-');
+    let oper = arr[operInd] + arr[operInd+1];
+    console.log(oper); 
+  }
   if (arr.length == 2) {
     const a = arr[0];
     let b = arr[1];
@@ -50,16 +56,23 @@ function getMatrix(str)
   return null;
 }
 
+function getPolynomial(str){
+
+}
+
 function getValue(str) 
 {
   if(str.includes('(')) 
-    return getVector(str);
+    return new Vector().getVector(str);//getVector(str);
 
   if(str.includes('i')) 
     return getComplex(str);
 
   if(str.includes('\n')) 
     return getMatrix(str);
+
+  if(str.includes('^')) 
+    return getPolynomial(str);
 
   return str - 0;
 }
@@ -75,6 +88,9 @@ function getCalculator(value)
   if(value instanceof Matrix)
     return new MatrixCalculator;
 
+  if(value instanceof Polynomial)
+    return new PolynomialCalculator;
+
   return new RealCalculator;
 }
 
@@ -88,6 +104,7 @@ function initialize()
     const calc = getCalculator(a);
 
     let result = calc[operand](a, b);
+    result = result==null ? "Undefined" : result;
     document.getElementById("result").value = result.toString();
   }
 
