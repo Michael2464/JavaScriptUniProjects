@@ -1,9 +1,5 @@
 class ComplexCalculator 
 {
-  constructor(calculator = new RealCalculator){
-    this.calculator = calculator;
-  }
-
   add(a, b) { return new Complex(a.re + b.re, a.im + b.im); }
   sub(a, b) { return new Complex(a.re - b.re, a.im - b.im); }
 
@@ -21,16 +17,20 @@ class ComplexCalculator
   }
 
   pow(a, n) {
-    const complex = new Complex(a.re, a.im);
-    for (let i = 1; i < n; i++) {
-      complex *= this.prod(complex, a);
+    const res = this.one();
+    for (let i = 0; i < n; i++) {
+      res = this.mult(res, a);
     }
-    return complex;
+    return res;
   }
 
-  prod(a, p) { return new Complex(a.re * p, a.im * p); }
+  prod(a, p) { 
+    return new Complex(a.re * p, a.im * p); 
+  }
 
-  one() { return new Complex(this.calculator.one()); }
+  one() { 
+    return new Complex(this.calculator.one()); 
+  }
   zero() { return new Complex; }
 
 }

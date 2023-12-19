@@ -1,5 +1,7 @@
 class MatrixCalculator
 {
+  // TODO: It needs to worj with complex numbers!! 
+
   constructor(calculator = new RealCalculator){
     this.calculator = calculator;
   }
@@ -16,20 +18,28 @@ class MatrixCalculator
   }
   mult(a, b) { 
     const length = a.values.length;
-    const c = this.zero(length);
+    let res = this.zero(length);
     for (let i = 0; i < length; i++){
       for (let j = 0; j < length; j++){
         let sum = this.calculator.zero();
         for(let k = 0; k < length; k++){
           sum = this.calculator.add(sum, this.calculator.mult(a.values[i][k], b.values[k][j]));
         }
-        sum.values[i][j] = sum;
+        res.values[i][j] = sum;
       }
     }
-    return c;
+    return res;
   }
-  div(a, b) { return null; }
-  pow(a, n) { return Math.pow(a, n); }
+  
+  div(a, b) {
+    // TODO 
+    return null; 
+  }
+
+  pow(a, n) { 
+    // TODO
+    return null; 
+  }
 
   prod(a, p) {
     return new Matrix(a.values.map(

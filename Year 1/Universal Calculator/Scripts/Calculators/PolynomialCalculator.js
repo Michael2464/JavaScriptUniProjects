@@ -1,8 +1,9 @@
 class PolynomialCalculator
 {
-  // TODO: Prod, zero, 
+  // TODO: prod, zero, one, pow 
   // Polynomial - string with 'x'
-  // Mnogochlen - string with 'x^q'
+
+  // ADD NEW FORM ONLY FOR POLYNOMIAL CALCULATOR
 
   polynomial(members) {
     return new Polynomial(members);
@@ -46,6 +47,14 @@ class PolynomialCalculator
     })
 
     return new Polynomial(members);
+  }
+
+  zero(){
+    return new Polynomial([new Member]);
+  }
+
+  one(){
+    return new Polynomial([new Member(1)]);
   }
 
 }

@@ -20,6 +20,7 @@ class VectorCalculator
   div(a, b) { return null; }
 
   pow(a, n) { 
+    // TODO: Doesn't calculate, FIX!!!
     const vec = new Vector(a.values);
     for(let i = 0; i < n; i++)
       vec = this.mult(vec, vec);
@@ -33,7 +34,10 @@ class VectorCalculator
   one(length) { 
     const values = [];
     for (let i = 0; i < length; i++)
-      values.push(this.calculator.one());
+      values.push(i==0 ? 
+                  this.calculator.one() : 
+                  this.calculator.zero()
+      );
     return new Vector(values);
   }
 
