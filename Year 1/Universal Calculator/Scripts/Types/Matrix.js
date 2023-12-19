@@ -14,7 +14,9 @@ class Matrix{
     7, 8, 9 
   */
   toString(){
-    return this.values.map(arr => arr.map(el => el.toString()).join(', ')).join('\n');
+    return this.values.map(
+      arr => arr.map(el => el.toString()).join(','))
+      .join('\n');
   }
 
 }

@@ -1,28 +1,32 @@
 class Polynomial {
   constructor(poly = []){
     this.poly = poly;
-    this.poly.sort((a, b) => b.power - a.power); // what for?
+    //this.poly.sort((a, b) => b.power - a.power); // what for?
+  }
+
+  addValue(value){
+    this.poly.push(value);
   }
 
   getValue(x) {
-    // TODO: It should return a number (float/int)
-
     // Learn about array functions (replace reduce with something else)
     // The structure is value*x^power, find the result (sum of those)
     const calc = new Calculator;
-    //return this.poly.reduce((S) => {
-    //  console.log(S);
-    //  //console.log(elem);
-    //  calc.add(calc.mult(S.value, calc.pow(x, S.power)))/*S*///, 
-    //           //calc.mult(elem.value, calc.pow(x, elem.power)));
-    //  //calc.zero(null, x);
-    //});
-    this.poly.map(elem => {
-      console.log(elem);
-      calc.mult(elem.value, calc.pow(x, elem.power));
-    });
-    console.log(this.poly);
-    return this.poly;
+    let result = calc.zero(null, x);
+    for(let i = 0; i < this.poly.length; i++){
+      let m = calc.mult(this.poly[i].value, 
+                        calc.pow(x, this.poly[i].power));
+      result = calc.add(result, m); 
+    }
+    return result;
+  }
+
+  toString(){
+    let str = this.poly[0].toString();
+    for(let i = 1; i < this.poly.length; i++){
+      str += this.poly[i];
+    }
+    return str;
   }
 
 }

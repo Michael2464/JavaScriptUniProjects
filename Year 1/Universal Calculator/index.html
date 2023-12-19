@@ -13,7 +13,7 @@
   <script src="Scripts/Types/Matrix.js"></script>
   <script src="Scripts/Types/Member.js"></script>
   <script src="Scripts/Types/Polynomial.js"></script>
-  
+
   <script src="Scripts/Calculators/Calculator.js"></script>
   <script src="Scripts/Calculators/RealCalculator.js"></script>
   <script src="Scripts/Calculators/ComplexCalculator.js"></script>
@@ -26,20 +26,40 @@
 </head>
 
 <body>
-  <h1 id="title">Universal Calculator</h1>
-  <div id="mainDiv">
-    <textarea class="myInput" class="element" id="input1"></textarea>
-    <select class="element" id="operation">
-      <option class="option" data-operand="add">+</option>
-      <option class="option" data-operand="sub">-</option>
-      <option class="option" data-operand="mult">*</option>
-      <option class="option" data-operand="div">/</option>
-      <option class="option" data-operand="prod">prod</option>
-      <option class="option" data-operand="pow">^</option>
-    </select>
-    <textarea class="myInput" class="element" id="input2"></textarea>
-    <p id="equals">=</p>
-    <textarea class="element" id="result"></textarea>
+  <div>
+    <h1 id="title">Calculator</h1>
+    <div id="mainDiv">
+      <textarea class="myInput" class="element" id="input1"></textarea>
+      <select class="element" id="operation">
+        <option class="option" data-operand="add">+</option>
+        <option class="option" data-operand="sub">-</option>
+        <option class="option" data-operand="mult">*</option>
+        <option class="option" data-operand="div">/</option>
+        <option class="option" data-operand="prod">prod</option>
+        <option class="option" data-operand="pow">^</option>
+      </select>
+      <textarea class="myInput" class="element" id="input2"></textarea>
+      <p id="equals">=</p>
+      <textarea class="element" id="result"></textarea>
+    </div>
+  </div>
+
+  <div>
+    <h1 id="title">Polynomial Calculator</h1>
+    <div id="mainDiv">
+      <textarea class="myInput" class="element" id="input1P"></textarea>
+      <select class="element" id="operationP">
+        <option class="optionP" data-operand="add">+</option>
+        <option class="optionP" data-operand="sub">-</option>
+        <option class="optionP" data-operand="mult">*</option>
+        <option class="optionP" data-operand="div">/</option>
+        <option class="optionP" data-operand="prod">prod</option>
+        <option class="optionP" data-operand="pow">^</option>
+      </select>
+      <textarea class="myInput" class="element" id="input2P"></textarea>
+      <p id="equals">=</p>
+      <textarea class="element" id="resultP"></textarea>
+    </div>
   </div>
 
 </body>

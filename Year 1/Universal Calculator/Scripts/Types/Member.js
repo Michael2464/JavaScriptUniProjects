@@ -5,11 +5,14 @@ class Member {
   }
 
   toString(){
-    if(this.value == 0)
+    if(this.value === 0)
       return '0';
-    if(this.power == 0)
+    if(this.power === 0)
       return this.value.toString();
-    return `${this.value}^${this.power}`;
+    if(this.power === 0)
+      return `${this.value > 0 ? ' + ' : ' - '}${Math.abs(this.value)}x`;
+
+    return `${this.value > 0 ? ' + ' : ' - '}${Math.abs(this.value)}x^${this.power}`;
   }
 
 }
