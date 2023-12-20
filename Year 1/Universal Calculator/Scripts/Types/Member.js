@@ -10,9 +10,9 @@ class Member {
     if(this.power === 0)
       return this.value.toString();
     if(this.power === 0)
-      return `${this.value > 0 ? ' + ' : ' - '}${Math.abs(this.value)}x`;
+      return `${this.value > 0 ? ' +' : ' -'}${Math.abs(this.value)}x`;
 
-    return `${this.value > 0 ? ' + ' : ' - '}${Math.abs(this.value)}x^${this.power}`;
+    return `${this.value > 0 ? ' +' : ' -'}${Math.abs(this.value)}x^${this.power}`;
   }
 
 }

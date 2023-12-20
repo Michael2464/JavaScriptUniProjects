@@ -53,7 +53,8 @@ body{
 }
 
 #result,
-#resultP{
+#resultP,
+#resultPX{
   background-color: rgb(70,70,70);
   border-style: none;
   border-radius: 10px;

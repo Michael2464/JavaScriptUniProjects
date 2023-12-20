@@ -1,7 +1,7 @@
 class Polynomial {
   constructor(poly = []){
     this.poly = poly;
-    //this.poly.sort((a, b) => b.power - a.power); // what for?
+    this.poly.sort((a, b) => b.power - a.power); // what for?
   }
 
   addValue(value){
@@ -9,7 +9,6 @@ class Polynomial {
   }
 
   getValue(x) {
-    // Learn about array functions (replace reduce with something else)
     // The structure is value*x^power, find the result (sum of those)
     const calc = new Calculator;
     let result = calc.zero(null, x);

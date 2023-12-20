@@ -1,89 +1,108 @@
-class PolynomialCalculator
-{
+class PolynomialCalculator {
   // TODO: prod, pow 
   // Polynomial - string with 'x'
 
+  // const members = [new Member(), new Member(), new Member()]
+  // Polynomial class -> const n = new Polynomial(members)
+  // n.poly[9].value
+
+
   // Turns string into array of Member classes
-  getValue(str){
-    const poly = new Polynomial;
+  getValue(str) {
     const arr = str.split(' ');
     const members = [];
-    
+
     console.log(arr.length);
-    for(let i = 0; i < arr.length; i++){
+    for (let i = 0; i < arr.length; i++) {
       const digits = arr[i].split('x^');
-      
-      members.push(new Member(digits[0]-0, digits[1]-0));
+      members.push(new Member(digits[0] - 0, digits[1] - 0));
     }
-    poly.addValue(members);
-    console.log(poly);
-    return poly;
+    return this.polynomial(members);
   }
 
   polynomial(members) {
     return new Polynomial(members);
   }
 
-
-  add(a, b){
+  add(a, b) {
     const calc = new Calculator;
     const members = [];
 
     a.poly.forEach(elemA => {
       const member = b.poly.find(elemB => elemB.power === elemA.power);
-      if(member)
+      if (member)
         members.push(new Member(calc.add(elemA.value, member.value), elemA.power));
       else
-        members.push(new Member(elemA.power, elemB.power));
+        members.push(new Member(elemA.value, elemA.power));
     });
 
     b.poly.forEach(elemB => {
-      if(!members.find(elem=>elem.power===elemB.power))
+      if (!members.find(elem => elem.power === elemB.power))
         members.push(new Member(elemB.value, elemB.power));
     })
 
     return new Polynomial(members);
   }
 
-  mult(a, b){
+  sub(a, b) {
     const calc = new Calculator;
-        let polynomial = this.polynomial();
-        a.poly.forEach(elemA => {
-            const members = [];
-            b.poly.forEach(elemB => {
-                members.push(new Member(calc.mult(elemA.value, elemB.value), elemA.power + elemB.power));
-            });
-            polynomial = this.add(polynomial, this.polynomial(members));
-        });
-        return polynomial;
+    const members = [];
 
-    //const calc = new Calculator;
-    //let polynomial = new Polynomial;
+    a.poly.forEach(elemA => {
+      const member = b.poly.find(elemB => elemB.power === elemA.power);
+      if (member)
+        members.push(new Member(calc.sub(elemA.value, member.value), elemA.power));
+      else
+        members.push(new Member(elemA.value, elemA.power));
+    });
 
+    b.poly.forEach(elemB => {
+      if (!members.find(elem => elem.power === elemB.power))
+        members.push(new Member(calc.prod(elemB.value, -1), elemB.power));
+    })
+
+    return new Polynomial(members);
+  }
+
+  mult(a, b) {
+    const calc = new Calculator;
+    let polynomial = this.polynomial();
     a.poly.forEach(elemA => {
       const members = [];
       b.poly.forEach(elemB => {
         members.push(new Member(calc.mult(elemA.value, elemB.value), elemA.power + elemB.power));
-      })
-      polynomial = this.add(polynomial, new Polynomial(members));
-    })
-
-    b.poly.forEach(elemB => {
-      if(!members.find(elem => elem.power===elemB.power))
-        members.push(new Member(elemB.value, elemB.power));
-    })
-
+      });
+      polynomial = this.add(polynomial, this.polynomial(members));
+    });
+    
     return polynomial;
-    //return new Polynomial(members);
+  }
+
+  div(a, b){
+    return null;
+  }
+
+  prod(a, b){
+    return this.mult(a, b);
+  }
+
+  pow(a, n){
+    // TODO: MAKE IT WORK (and in the VectorCalculator as well)
+    const poly = a;
+    for(let i = 1; i < n; i++){
+      poly = this.mult(poly, a);
+    }
+    console.log(poly);
+    return poly;
   }
 
   // 0 -> 0x^0
-  zero(){
+  zero() {
     return new Polynomial([new Member]);
   }
 
   // 1 -> 1x^0
-  one(){
+  one() {
     return new Polynomial([new Member(1)]);
   }
 
