@@ -1,8 +1,9 @@
 class MatrixCalculator
 {
-  // TODO: It needs to worj with complex numbers!! 
+  // TODO: It needs to work with complex numbers!! 
 
   constructor(calculator = new RealCalculator){
+    calculator = calculator.constructor.name == "ComplexCalculator" ? new ComplexCalculator : new RealCalculator; 
     this.calculator = calculator;
   }
 
@@ -37,8 +38,11 @@ class MatrixCalculator
   }
 
   pow(a, n) { 
-    // TODO
-    return null; 
+    let res = new Matrix(a.values);
+    for (let i = 1; i < n; i++) {
+      res = this.mult(res, a);
+    }
+    return res; 
   }
 
   prod(a, p) {

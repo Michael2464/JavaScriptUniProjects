@@ -11,9 +11,9 @@ class Calculator {
 
   get(elem) {
     if (elem instanceof Matrix)
-      return new MatrixCalculator(/*this.get(elem.values[0][0])*/);
+      return new MatrixCalculator(this.get(elem.values[0][0]));
     if (elem instanceof Vector)
-      return new VectorCalculator(/*this.get(elem.values[0])*/);
+      return new VectorCalculator(this.get(elem.values[0]));
     if (elem instanceof Complex)
       return new ComplexCalculator;
     return new RealCalculator;
@@ -68,15 +68,22 @@ class Calculator {
   }
 
   getComplex(value) {
-    // TODO: Should work without spaces at all
-    // TODO: 2 + i !!!! When i is single, it will probably break
+    // TODO: must work with 'x*i'  
+    // TODO: must work with 'x+ yi'
+
     const arr = value.split(' ');
-    
-    if(arr.length == 1){
+
+    if (arr.length == 1) {
       // 3+3i
-      let operInd = arr.search('-') == -1 ? arr.search('+') : arr.searc('-');
-      let oper = arr[operInd] + arr[operInd+1];
-      console.log(oper); 
+      let operInd = arr[0].indexOf('-') == -1 ? 
+          arr[0].indexOf('+') : 
+          arr[0].indexOf('-');
+      let oper = arr[0].slice(operInd, operInd+1);
+
+      const compl = arr[0].split(oper);
+      compl[1] = compl[1].replace('i', '');
+      compl[1] = compl[1] == '' ? compl[1] = '1' : compl[1];
+      return new Complex(compl[0]-0, oper=='-' ? -compl[1]-0 : compl[1]-0);
     }
     if (arr.length == 2) {
       const a = arr[0];
@@ -92,55 +99,55 @@ class Calculator {
     }
     return null;
   }
-  
-  getVector(str)
-  {
-    if(str instanceof Array)
+
+  getVector(str) {
+    if (str instanceof Array)
       return new Vector(str);
-  
-    if(str && typeof str === 'string')
-    {
+
+    if (str && typeof str === 'string') {
       const arr = str.replace('(', '').replace(')', '')
-              .split(' ').map(el => this.getValue(el));
+        .split(' ').map(el => this.getValue(el));
       return new Vector(arr);
     }
     return null;
   }
-  
-  getMatrix(str)
-  {
-    if(str instanceof Array)
+
+  getMatrix(str) {
+    if (str instanceof Array) {
       return new Matrix(str);
-  
-    if(str && typeof str === 'string')
-    {
+    }
+
+    if (str && typeof str === 'string') {
       const arr = str.split('\n');
       const values = [];
-  
-      for(let i = 0; i < arr.length; i++)
-        values.push(arr[i].split(',').map(el => this.getValue(el)));
-  
-      if(values[0] instanceof Array) 
+
+      for (let i = 0; i < arr.length; i++) {
+        values.push(arr[i].split(',').map(el => {
+          // If the string is like: ' 1 + 3i', it removes first space
+          // thus giving us the needed string 
+          el = el[0] == ' ' ? el.slice(1, el.length) : el;
+          return this.getValue(el);
+        }));
+      }
+
+      if (values[0] instanceof Array) {
         return new Matrix(values);
+      }
     }
     return null;
   }
-  
-  getPolynomial(str){
-  
-  }
-  
-  getValue(str) 
-  {
-    if(str.includes('(')) 
-      return this.getVector(str);//getVector(str);
-  
-    if(str.includes('i')) 
-      return this.getComplex(str);
-  
-    if(str.includes('\n')) 
+
+  getValue(str) {
+    if (str.includes('(')) {
+      return this.getVector(str);
+    }
+    else if (str.includes('\n')) {
       return this.getMatrix(str);
-  
+    }
+    else if (str.includes('i')) {
+      return this.getComplex(str);
+    }
+
     return str - 0;
   }
 

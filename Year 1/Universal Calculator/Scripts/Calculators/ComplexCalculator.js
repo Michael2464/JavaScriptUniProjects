@@ -17,7 +17,7 @@ class ComplexCalculator
   }
 
   pow(a, n) {
-    const res = this.one();
+    let res = this.one();
     for (let i = 0; i < n; i++) {
       res = this.mult(res, a);
     }
@@ -29,7 +29,7 @@ class ComplexCalculator
   }
 
   one() { 
-    return new Complex(this.calculator.one()); 
+    return new Complex(1); 
   }
   zero() { return new Complex; }
 

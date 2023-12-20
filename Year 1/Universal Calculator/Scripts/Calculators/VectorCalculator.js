@@ -21,9 +21,10 @@ class VectorCalculator
 
   pow(a, n) { 
     // TODO: Doesn't calculate, FIX!!!
-    const vec = new Vector(a.values);
-    for(let i = 0; i < n; i++)
-      vec = this.mult(vec, vec);
+    // TODO: Check if it is correct
+    let vec = new Vector(a.values);
+    for(let i = 1; i < n; i++)
+      vec = this.mult(vec, a);
     return vec;
   }
 
