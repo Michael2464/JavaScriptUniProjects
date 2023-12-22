@@ -6,7 +6,8 @@ function initialize() {
     const b = calculator.getValue(document.getElementById("input2").value);
 
     const operand = event.target.dataset.operand;
-
+    console.log(operand);
+    
     let result = calculator[operand](a, b);
     result = result == null ? "Undefined" : result;
     document.getElementById("result").value = result.toString();

@@ -18,10 +18,13 @@ class MatrixCalculator
   mult(a, b) { 
     const length = a.values.length;
     let res = this.zero(length);
-    for (let i = 0; i < length; i++){
-      for (let j = 0; j < length; j++){
+    for (let i = 0; i < length; i++)
+    {
+      for (let j = 0; j < length; j++)
+      {
         let sum = this.calculator.zero();
-        for(let k = 0; k < length; k++){
+        for(let k = 0; k < length; k++)
+        {
           sum = this.calculator.add(sum, this.calculator.mult(a.values[i][k], b.values[k][j]));
         }
         res.values[i][j] = sum;

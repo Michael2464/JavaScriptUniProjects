@@ -2,11 +2,6 @@ class PolynomialCalculator {
   // TODO: pow 
   // Polynomial - string with 'x'
 
-  // const members = [new Member(), new Member(), new Member()]
-  // Polynomial class -> const n = new Polynomial(members)
-  // n.poly[9].value
-
-
   // Turns string into array of Member classes
   getValue(str) {
     const arr = str.split(' ');
@@ -83,16 +78,21 @@ class PolynomialCalculator {
   }
 
   prod(a, b) {
-    return this.mult(a, b);
+    const calc = new Calculator;
+    const members = [];
+
+    a.poly.forEach(elemA => {
+      members.push(new Member(calc.prod(elemA.value, b), elemA.power));
+    });
+
+    return new Polynomial(members);
   }
 
   pow(a, n) {
-    // TODO: MAKE IT WORK (and in the VectorCalculator as well)
     const poly = a;
     for (let i = 1; i < n; i++) {
       poly = this.mult(poly, a);
     }
-    console.log(poly);
     return poly;
   }
 
