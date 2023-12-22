@@ -7,10 +7,9 @@ class Member {
   toString(){
     if(this.value === 0)
       return '0';
-    if(this.power === 0)
-      return this.value.toString();
-    if(this.power === 0)
-      return `${this.value > 0 ? ' +' : ' -'}${Math.abs(this.value)}x`;
+    if(this.power === 0){
+      return `${this.value > 0 ? ' +' : ' -'}${Math.abs(this.value)}`;
+    }
 
     return `${this.value > 0 ? ' +' : ' -'}${Math.abs(this.value)}x^${this.power}`;
   }

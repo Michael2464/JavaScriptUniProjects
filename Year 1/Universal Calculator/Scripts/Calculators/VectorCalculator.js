@@ -1,6 +1,7 @@
 class VectorCalculator
 {
   constructor(calculator = new RealCalculator){
+    calculator = calculator.constructor.name == "ComplexCalculator" ? new ComplexCalculator : new RealCalculator; 
     this.calculator = calculator;
   }
 
@@ -20,7 +21,6 @@ class VectorCalculator
   div(a, b) { return null; }
 
   pow(a, n) { 
-    // TODO: Doesn't calculate, FIX!!!
     // TODO: Check if it is correct
     let vec = new Vector(a.values);
     for(let i = 1; i < n; i++)

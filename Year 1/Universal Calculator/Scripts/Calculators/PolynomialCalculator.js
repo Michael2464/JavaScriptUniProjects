@@ -1,5 +1,5 @@
 class PolynomialCalculator {
-  // TODO: prod, pow 
+  // TODO: pow 
   // Polynomial - string with 'x'
 
   // const members = [new Member(), new Member(), new Member()]
@@ -15,7 +15,7 @@ class PolynomialCalculator {
     console.log(arr.length);
     for (let i = 0; i < arr.length; i++) {
       const digits = arr[i].split('x^');
-      members.push(new Member(digits[0] - 0, digits[1] - 0));
+      members.push(new Member(digits[0] - 0, (digits[1] == undefined ? 0 : digits[1]) - 0));
     }
     return this.polynomial(members);
   }
@@ -74,22 +74,22 @@ class PolynomialCalculator {
       });
       polynomial = this.add(polynomial, this.polynomial(members));
     });
-    
+
     return polynomial;
   }
 
-  div(a, b){
+  div(a, b) {
     return null;
   }
 
-  prod(a, b){
+  prod(a, b) {
     return this.mult(a, b);
   }
 
-  pow(a, n){
+  pow(a, n) {
     // TODO: MAKE IT WORK (and in the VectorCalculator as well)
     const poly = a;
-    for(let i = 1; i < n; i++){
+    for (let i = 1; i < n; i++) {
       poly = this.mult(poly, a);
     }
     console.log(poly);

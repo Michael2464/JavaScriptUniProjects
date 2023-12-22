@@ -1,7 +1,5 @@
 class MatrixCalculator
 {
-  // TODO: It needs to work with complex numbers!! 
-
   constructor(calculator = new RealCalculator){
     calculator = calculator.constructor.name == "ComplexCalculator" ? new ComplexCalculator : new RealCalculator; 
     this.calculator = calculator;
@@ -33,7 +31,6 @@ class MatrixCalculator
   }
   
   div(a, b) {
-    // TODO 
     return null; 
   }
 

@@ -71,19 +71,24 @@ class Calculator {
     // TODO: must work with 'x*i'  
     // TODO: must work with 'x+ yi'
 
-    const arr = value.split(' ');
+    let arr = value.split(' ');
 
     if (arr.length == 1) {
       // 3+3i
-      let operInd = arr[0].indexOf('-') == -1 ? 
-          arr[0].indexOf('+') : 
-          arr[0].indexOf('-');
+      let operInd = arr[0].lastIndexOf('+') == -1 ? 
+          arr[0].lastIndexOf('-') : 
+          arr[0].lastIndexOf('+');
       let oper = arr[0].slice(operInd, operInd+1);
 
-      const compl = arr[0].split(oper);
+      let str = arr[0].toString();
+      let firstNegative = str[0] == '-' ? true : false;
+      if(firstNegative)
+        str = str.slice(1, str.length);
+      const compl = str.split(oper);
+
       compl[1] = compl[1].replace('i', '');
       compl[1] = compl[1] == '' ? compl[1] = '1' : compl[1];
-      return new Complex(compl[0]-0, oper=='-' ? -compl[1]-0 : compl[1]-0);
+      return new Complex(firstNegative ? -(compl[0]-0) : compl[0]-0, oper=='-' ? -compl[1]-0 : compl[1]-0);
     }
     if (arr.length == 2) {
       const a = arr[0];

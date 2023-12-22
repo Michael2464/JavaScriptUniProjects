@@ -49,11 +49,9 @@ function initialize() {
       if it is present 
     */
     if(polyStr[0] == ' '){
-      polyStr = polyStr.slice(1, polyStr.length-1);
-      console.log(polyStr);
+      polyStr = polyStr.slice(1, polyStr.length);
     }
 
-    console.log(polyStr);
     let poly = calc.getValue(polyStr);
     result.value = poly.getValue(number.value-0).toString();
   };
